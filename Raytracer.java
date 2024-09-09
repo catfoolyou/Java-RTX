@@ -7,15 +7,15 @@ public class Raytracer{
 
     double hit_sphere(Vector3 center, double radius, Ray r) {
         Vector3 oc = center.subtract(r.origin);
-        float a = Vector3.dot(r.direction, r.direction);
-        float b = (float) (-2.0 * Vector3.dot(r.direction, oc));
-        float c = (float) (Vector3.dot(oc, oc) - radius * radius);
-        float discriminant = b * b - 4 * a * c;
+        float a = r.direction.length();
+        float h = Vector3.dot(r.direction, oc);
+        float c = (float) (oc.length() - radius * radius);
+        float discriminant = h * h - a * c;
 
         if (discriminant < 0) {
             return -1.0;
         } else {
-            return (-b - Math.sqrt(discriminant) ) / (2.0*a);
+            return (h - Math.sqrt(discriminant) ) / a;
         }
     }
 
@@ -23,7 +23,7 @@ public class Raytracer{
         double t = hit_sphere(new Vector3(0,0,-1), 0.5, r);
         if (t > 0.0) {
             Vector3 N = (r.at((float) t).subtract(new Vector3(0,0,-1)));
-            return new Vector3(N.x+1, N.y+1, N.z+1).multiply((float) 0.5);
+            return new Vector3(N.x+1, N.y+1, N.z+1).multiply((float) 0.6);
         }
 
         Vector3 unit_direction = (r.direction);
