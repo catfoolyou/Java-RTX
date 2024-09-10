@@ -12,6 +12,7 @@ public class Camera {
     double aspect_ratio = 16.0 / 9.0;  // Ratio of image width over height
     int image_width  = 400;  // Rendered image width in pixel count
     int samples_per_pixel = 10;
+    int max_depth = 10;
 
     int image_height;   // Rendered image height
     Vector3 center;         // Camera center
@@ -61,13 +62,14 @@ public class Camera {
         writer.write("P3\n" + image_width + " " + image_height + "\n" + "255\n");
 
         for (int j = 0; j < image_height; j++) {
+            System.out.println("Scanlines remaining: " + (image_height - j));
             for (int i = 0; i < image_width; i++) {
 
                 Vector3 pixel_color = new Vector3(0,0,0);
                 
                 for (int sample = 0; sample < samples_per_pixel; sample++) {
                     Ray r = get_ray(i, j);
-                    pixel_color = pixel_color.add(ray_color(r, world));
+                    pixel_color = pixel_color.add(ray_color(r, max_depth, world));
                 }
 
                 WriteColor.write_color(writer, pixel_color.multiply(pixel_samples_scale));
@@ -94,11 +96,15 @@ public class Camera {
         return new Vector3(random_double() - 0.5, random_double() - 0.5, 0);
     }
 
-    Vector3 ray_color(Ray r, Hittable world) {
+    Vector3 ray_color(Ray r, int depth, Hittable world) {
+        if (depth <= 0)
+            return new Vector3(0,0,0);
+
         hit_record rec = new hit_record();
 
-        if (world.hit(r, new Interval(0, infinity), rec)) {
-            return (rec.normal.add(new Vector3(1))).multiply(0.5);
+        if (world.hit(r, new Interval(0.001, infinity), rec)) {
+            Vector3 direction = Vector3.random_on_hemisphere(rec.normal);
+            return ray_color(new Ray(rec.p, direction), depth-1, world).multiply(0.5);
         }
 
         Vector3 unit_direction = (r.direction);

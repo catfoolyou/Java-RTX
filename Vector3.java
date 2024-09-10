@@ -36,6 +36,14 @@ public class Vector3 {
         z = (float) oneCoord;
     }
 
+    public static double random_double() {
+        return Math.random();
+    }
+    
+    public static double random_double(double min, double max) {
+        return min + (max-min) * random_double();
+    }
+
     // Operator overloading doesnt exist.
     // Also vscode is a piece of shit and doesnt even support manifold
 
@@ -109,6 +117,35 @@ public class Vector3 {
 
     public static Vector3 lerp(Vector3 a, Vector3 b, float t) {
         return a.add(b.subtract(a).multiply(t));
+    }
+
+    public Vector3 random() {
+        return new Vector3(random_double(), random_double(), random_double());
+    }
+
+    public Vector3 random(double min, double max) {
+        return new Vector3(random_double(min,max), random_double(min,max), random_double(min,max));
+    }
+
+    public Vector3 unit_vector(Vector3 v) {
+        return v.divide(new Vector3(v.length()));
+    }
+    
+    public static Vector3 random_unit_vector() {
+        while (true) {
+            Vector3 p = new Vector3(random_double(-1, 1));
+            double lensq = p.length_squared();
+            if (1e-160 < lensq && lensq <= 1)
+                return p.divide(new Vector3(Math.sqrt(lensq)));
+        }
+    }
+
+    public static Vector3 random_on_hemisphere(Vector3 normal) {
+        Vector3 on_unit_sphere = random_unit_vector();
+        if (dot(on_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
+            return on_unit_sphere;
+        else
+            return new Vector3(0).subtract(on_unit_sphere);
     }
 
     @Override
