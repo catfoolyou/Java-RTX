@@ -7,9 +7,11 @@ public class WriteColor {
         float g = g2;
         float b = b2;
 
-        int ir = (int)(255.999 * r);
-        int ig = (int)(255.999 * g);
-        int ib = (int)(255.999 * b);
+        Interval intensity = new Interval(0.000, 0.999);
+
+        int ir = (int) (256 * intensity.clamp(r));
+        int ig = (int) (256 * intensity.clamp(g));
+        int ib = (int) (256 * intensity.clamp(b));
 
         String output = (ir + " " + ig + " " + ib + "\n");                
         writerin.write(output);
@@ -21,9 +23,11 @@ public class WriteColor {
         float g = vec.y;
         float b = vec.z;
 
-        int ir = (int)(255.999 * r);
-        int ig = (int)(255.999 * g);
-        int ib = (int)(255.999 * b);
+        Interval intensity = new Interval(0.000, 0.999);
+
+        int ir = (int) (256 * intensity.clamp(r));
+        int ig = (int) (256 * intensity.clamp(g));
+        int ib = (int) (256 * intensity.clamp(b));
 
         String output = (ir + " " + ig + " " + ib + "\n");                
         writerin.write(output);

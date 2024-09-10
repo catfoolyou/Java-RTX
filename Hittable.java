@@ -1,6 +1,6 @@
 public class Hittable {
 
-    public boolean hit(Ray r, double ray_tmin, double ray_tmax, hit_record rec){
+    public boolean hit(Ray r, Interval ray_t, hit_record rec){
         return false;
     }
 }
