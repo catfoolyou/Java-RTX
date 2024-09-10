@@ -22,6 +22,14 @@ public class Camera {
 
     File image = new File("result.ppm");
 
+    public double random_double() {
+        return Math.random();
+    }
+    
+    public double random_double(double min, double max) {
+        return min + (max-min) * random_double();
+    }
+
     public void initialize(){
         image_height = (int) (image_width / aspect_ratio);
         image_height = (image_height < 1) ? 1 : image_height;
@@ -54,15 +62,36 @@ public class Camera {
 
         for (int j = 0; j < image_height; j++) {
             for (int i = 0; i < image_width; i++) {
-                Vector3 pixel_center = pixel00_loc.add(pixel_delta_u.multiply(new Vector3(i))).add(pixel_delta_v.multiply(new Vector3(j)));
-                Vector3 ray_direction = pixel_center.subtract(center);
-                Ray r = new Ray(center, ray_direction);
 
-                Vector3 pixel_color = ray_color(r, world);
-                WriteColor.write_color(writer, pixel_color);
+                Vector3 pixel_color = new Vector3(0,0,0);
+                
+                for (int sample = 0; sample < samples_per_pixel; sample++) {
+                    Ray r = get_ray(i, j);
+                    pixel_color = pixel_color.add(ray_color(r, world));
+                }
+
+                WriteColor.write_color(writer, pixel_color.multiply(pixel_samples_scale));
             }
         }
         writer.close();
+    }
+
+    public Ray get_ray(int i, int j){
+        // Construct a camera ray originating from the origin and directed at randomly sampled
+        // point around the pixel location i, j.
+
+        Vector3 offset = sample_square();
+        Vector3 pixel_sample = pixel00_loc.add(pixel_delta_u.multiply(i + offset.x)).add(pixel_delta_v.multiply(j + offset.y));
+
+        Vector3 ray_origin = center;
+        Vector3 ray_direction = pixel_sample.subtract(ray_origin);
+
+        return new Ray(ray_origin, ray_direction);
+    }
+
+    public Vector3 sample_square(){
+        // Returns the vector to a random point in the [-.5,-.5]-[+.5,+.5] unit square.
+        return new Vector3(random_double() - 0.5, random_double() - 0.5, 0);
     }
 
     Vector3 ray_color(Ray r, Hittable world) {
