@@ -15,4 +15,8 @@ public class Ray {
         return origin.add(direction.multiply(t));
     }
 
+    public Vector3 at(double t){
+        return origin.add(direction.multiply((float) t));
+    }
+
 }

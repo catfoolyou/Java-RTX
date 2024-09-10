@@ -5,30 +5,22 @@ import java.io.IOException;
 
 public class Raytracer{
 
-    double hit_sphere(Vector3 center, double radius, Ray r) {
-        Vector3 oc = center.subtract(r.origin);
-        float a = r.direction.length();
-        float h = Vector3.dot(r.direction, oc);
-        float c = (float) (oc.length() - radius * radius);
-        float discriminant = h * h - a * c;
+    final double infinity = Double.POSITIVE_INFINITY;
+    final double pi = 3.1415926535897932385;
 
-        if (discriminant < 0) {
-            return -1.0;
-        } else {
-            return (h - Math.sqrt(discriminant) ) / a;
-        }
+    double degrees_to_radians(double degrees) {
+        return degrees * pi / 180.0;
     }
 
-    Vector3 ray_color(Ray r) {
-        double t = hit_sphere(new Vector3(0,0,-1), 0.5, r);
-        if (t > 0.0) {
-            Vector3 N = (r.at((float) t).subtract(new Vector3(0,0,-1)));
-            return new Vector3(N.x+1, N.y+1, N.z+1).multiply((float) 0.6);
+    Vector3 ray_color(Ray r, Hittable world) {
+        hit_record rec = new hit_record();
+        if (world.hit(r, 0, infinity, rec)) {
+            return (rec.normal.add(new Vector3(1))).multiply(0.5);
         }
 
         Vector3 unit_direction = (r.direction);
-        float a = (float) (0.5 * (unit_direction.y + 1.0));
-        return new Vector3(1.0, 1.0, 1.0).multiply((float) 1.0 - a).add(new Vector3(0.5, 0.7, 1.0).multiply(a));
+        float a = (float) (0.5 * (unit_direction.y + 1));
+        return new Vector3(1).multiply((float) 1.0 - a).add(new Vector3(0.5, 0.7, 1.0).multiply(a));
     }
 
     int image_width = 256;
@@ -42,6 +34,11 @@ public class Raytracer{
 
         image_height = (int) (image_width / aspect_ratio);
         image_height = (image_height < 1) ? 1 : image_height;
+
+        HittableList world = new HittableList();
+
+        world.add(new Sphere(new Vector3(0,0,-1), 0.5));
+        world.add(new Sphere(new Vector3(0,-100.5,-1), 100));
 
         double focal_length = 1.0;
         double viewport_height = 2.0;
@@ -69,8 +66,7 @@ public class Raytracer{
                 Vector3 ray_direction = pixel_center.subtract(camera_center);
                 Ray r = new Ray(camera_center, ray_direction);
 
-                Vector3 pixel_color = ray_color(r);
-
+                Vector3 pixel_color = ray_color(r, world);
                 WriteColor.write_color(writer, pixel_color);
             }
         }

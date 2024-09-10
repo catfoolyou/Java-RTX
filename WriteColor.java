@@ -1,5 +1,3 @@
-
-import java.awt.Color;
 import java.io.BufferedWriter;
 import java.io.IOException;
 

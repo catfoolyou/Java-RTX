@@ -51,6 +51,10 @@ public class Vector3 {
         return new Vector3(this.x * scalar, this.y * scalar, this.z * scalar);
     }
 
+    public Vector3 multiply(double scalar) {
+        return new Vector3(this.x * scalar, this.y * scalar, this.z * scalar);
+    }
+
     public Vector3 multiply(Vector3 vec) {
         return new Vector3(this.x * vec.x, this.y * vec.y, this.z * vec.z);
     }
@@ -61,6 +65,10 @@ public class Vector3 {
 
     public float length() {
         return (float) Math.sqrt(x*x+y*y+z*z);
+    }
+
+    public double length_squared() {
+        return (x*x+y*y+z*z);
     }
 
     public Vector3 normalize() {
