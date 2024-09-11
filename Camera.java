@@ -103,7 +103,7 @@ public class Camera {
         hit_record rec = new hit_record();
 
         if (world.hit(r, new Interval(0.001, infinity), rec)) {
-            Vector3 direction = Vector3.random_on_hemisphere(rec.normal);
+            Vector3 direction = rec.normal.add(Vector3.random_unit_vector());
             return ray_color(new Ray(rec.p, direction), depth-1, world).multiply(0.5);
         }
 

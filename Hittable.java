@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Hittable {
 
     public boolean hit(Ray r, Interval ray_t, hit_record rec){
@@ -9,6 +11,7 @@ class hit_record {
 
     Vector3 p;
     Vector3 normal;
+    ArrayList<Material> material = new ArrayList<Material>(); 
     double t;
     boolean front_face;
 

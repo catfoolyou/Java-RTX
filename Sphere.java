@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+
 public class Sphere extends Hittable {
     private Vector3 center;
     private double radius;
+    private ArrayList<Material> material = new ArrayList<Material>(); 
     
     public Sphere(Vector3 center, double radius){
         this.center = center;
@@ -31,6 +34,7 @@ public class Sphere extends Hittable {
         rec.p = r.at(rec.t);
         Vector3 outward_normal = (rec.p.subtract(center)).divide(new Vector3(radius));
         rec.set_face_normal(r, outward_normal);
+        //rec.mat = mat;
 
         return true;
     }
