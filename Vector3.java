@@ -79,6 +79,12 @@ public class Vector3 {
         return (x*x+y*y+z*z);
     }
 
+    public boolean near_zero(){
+        // Return true if the vector is close to zero in all dimensions.
+        double s = 1e-8;
+        return (Math.abs(x) < s) && (Math.abs(y) < s) && (Math.abs(z) < s);
+    }
+
     public Vector3 normalize() {
         float length = length();
         return new Vector3(this.x / length, this.y / length, this.z / length);
