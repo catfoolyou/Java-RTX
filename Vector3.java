@@ -123,7 +123,7 @@ public class Vector3 {
         return new Vector3(random_double(), random_double(), random_double());
     }
 
-    public Vector3 random(double min, double max) {
+    public static Vector3 random(double min, double max) {
         return new Vector3(random_double(min,max), random_double(min,max), random_double(min,max));
     }
 
@@ -133,7 +133,7 @@ public class Vector3 {
     
     public static Vector3 random_unit_vector() {
         while (true) {
-            Vector3 p = new Vector3(random_double(-1, 1));
+            Vector3 p = Vector3.random(-1, 1);
             double lensq = p.length_squared();
             if (1e-160 < lensq && lensq <= 1)
                 return p.divide(new Vector3(Math.sqrt(lensq)));
