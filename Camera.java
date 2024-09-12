@@ -80,7 +80,7 @@ public class Camera {
         writer.close();
 
         long endTime = System.currentTimeMillis();
-        System.out.println("Done! (" + (endTime - startTime) + " ms)");
+        System.out.println("Done! (" + (endTime - startTime) / 1000.0 + " s)");
     }
 
     public Ray get_ray(int i, int j){
@@ -108,18 +108,18 @@ public class Camera {
         hit_record rec = new hit_record();
 
         if (world.hit(r, new Interval(0.001, infinity), rec)) {
-            Vector3 direction = rec.normal.add(Vector3.random_unit_vector());
-            Ray scattered = new Ray(rec.p, direction);
+            Vector3 attenuation = rec.normal.add(Vector3.random_unit_vector());
+            Ray scattered = new Ray(rec.p, attenuation);
 
-            if (rec.material.scatter(r, rec, direction, scattered)){
-                return direction.multiply(ray_color(scattered, depth-1, world));
-                //return ray_color(new Ray(rec.p, direction), depth-1, world).multiply(0.5);
+            if (rec.material.scatter(r, rec, attenuation, scattered)){
+                return attenuation.multiply(ray_color(scattered, depth-1, world));
+                //return ray_color(scattered, depth-1, world).multiply(0.5);
             }
             return new Vector3(0,0,0);
         }
 
         Vector3 unit_direction = (r.direction);
-        float a = (float) (0.5 * (unit_direction.y + 1));
+        float a = (float) (0.5 * (unit_direction.y + 1.0));
         return new Vector3(1).multiply((float) 1.0 - a).add(new Vector3(0.5, 0.7, 1.0).multiply(a));
     }
 }
