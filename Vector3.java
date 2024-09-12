@@ -154,6 +154,10 @@ public class Vector3 {
             return new Vector3(0).subtract(on_unit_sphere);
     }
 
+    public static Vector3 reflect(Vector3 v, Vector3 n) {
+        return v.subtract(new Vector3(2)).multiply(new Vector3(dot(v,n))).multiply(n);
+    }
+
     @Override
     public Vector3 clone() {
         return new Vector3(x, y, z);

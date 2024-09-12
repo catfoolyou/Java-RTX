@@ -1,6 +1,8 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Raytracer{
 
@@ -25,8 +27,15 @@ public class Raytracer{
         
         HittableList world = new HittableList();
 
-        world.add(new Sphere(new Vector3(0,0,-1), 0.5));
-        world.add(new Sphere(new Vector3(0,-100.5,-1), 100));
+        Material material_ground = new Lambertian(new Vector3(0.8, 0.8, 0.0));
+        Material material_center = new Lambertian(new Vector3(0.1, 0.2, 0.5));
+        Material material_left = new Metal(new Vector3(0.8, 0.8, 0.8));
+        Material material_right = new Metal(new Vector3(0.8, 0.6, 0.2));
+
+        world.add(new Sphere(new Vector3(0.0, -100.5, -1.0),100.0, material_ground));
+        world.add(new Sphere(new Vector3(0.0, 0.0, -1.2), 0.5, material_center));
+        world.add(new Sphere(new Vector3(-1.0, 0.0, -1.0), 0.5, material_left));
+        world.add(new Sphere(new Vector3(1.0, 0.0, -1.0), 0.5, material_right));
 
         Camera cam = new Camera();
 

@@ -58,6 +58,8 @@ public class Camera {
 
         image.delete();
         BufferedWriter writer = new BufferedWriter(new FileWriter(image.getAbsoluteFile()));
+
+        long startTime = System.currentTimeMillis();
         
         writer.write("P3\n" + image_width + " " + image_height + "\n" + "255\n");
 
@@ -76,6 +78,9 @@ public class Camera {
             }
         }
         writer.close();
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("Done! (" + (endTime - startTime) + " ms)");
     }
 
     public Ray get_ray(int i, int j){
@@ -104,7 +109,13 @@ public class Camera {
 
         if (world.hit(r, new Interval(0.001, infinity), rec)) {
             Vector3 direction = rec.normal.add(Vector3.random_unit_vector());
-            return ray_color(new Ray(rec.p, direction), depth-1, world).multiply(0.5);
+            Ray scattered = new Ray(rec.p, direction);
+
+            if (rec.material.scatter(r, rec, direction, scattered)){
+                return direction.multiply(ray_color(scattered, depth-1, world));
+                //return ray_color(new Ray(rec.p, direction), depth-1, world).multiply(0.5);
+            }
+            return new Vector3(0,0,0);
         }
 
         Vector3 unit_direction = (r.direction);

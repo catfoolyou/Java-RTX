@@ -5,7 +5,7 @@ public class Material {
 }
 
 class Lambertian extends Material{
-    private Vector3 albedo;
+    public Vector3 albedo;
 
     public Lambertian(Vector3 albedo){
         this.albedo = albedo;
@@ -22,3 +22,19 @@ class Lambertian extends Material{
         return true;
     }
 }
+
+class Metal extends Material{
+    public Vector3 albedo;
+
+    public Metal(Vector3 albedo){
+        this.albedo = albedo;
+    }
+
+    public boolean scatter(Ray r_in, hit_record rec, Vector3 attenuation, Ray scattered){
+        Vector3 reflected = Vector3.reflect(r_in.direction, rec.normal);
+        scattered = new Ray(rec.p, reflected);
+        attenuation = albedo;
+        return true;
+    }
+}
+
