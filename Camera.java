@@ -108,10 +108,15 @@ public class Camera {
         hit_record rec = new hit_record();
 
         if (world.hit(r, new Interval(0.001, infinity), rec)) {
+            
             Vector3 attenuation = rec.normal.add(Vector3.random_unit_vector());
             Ray scattered = new Ray(rec.p, attenuation);
+            
+            if (rec.material.scatter(r, rec)){
 
-            if (rec.material.scatter(r, rec, attenuation, scattered)){
+                attenuation = rec.material.albedo = new Vector3(0.5, 0.4, 0.9);
+                //scattered = rec.material.scattered;
+                
                 return attenuation.multiply(ray_color(scattered, depth-1, world));
                 //return ray_color(scattered, depth-1, world).multiply(0.5);
             }
