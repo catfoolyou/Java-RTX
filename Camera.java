@@ -113,9 +113,8 @@ public class Camera {
             Ray scattered = new Ray(rec.p, attenuation);
             
             if (rec.material.scatter(r, rec)){
-
-                attenuation = rec.material.albedo = new Vector3(0.5, 0.4, 0.9);
-                //scattered = rec.material.scattered;
+                attenuation = rec.material.albedo;
+                scattered = rec.material.scattered;
                 
                 return attenuation.multiply(ray_color(scattered, depth-1, world));
                 //return ray_color(scattered, depth-1, world).multiply(0.5);

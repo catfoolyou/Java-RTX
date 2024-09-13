@@ -30,6 +30,8 @@ public class Raytracer{
         Material material_left = new Metal(new Vector3(0.8, 0.8, 0.8));
         Material material_right = new Metal(new Vector3(0.8, 0.6, 0.2));
 
+        //material_center.albedo = new Vector3(0.1, 0.2, 0.5);
+
         world.add(new Sphere(new Vector3(0.0, -100.5, -1.0),100.0, material_ground));
         world.add(new Sphere(new Vector3(0.0, 0.0, -1.2), 0.5, material_center));
         world.add(new Sphere(new Vector3(-1.0, 0.0, -1.0), 0.5, material_left));
