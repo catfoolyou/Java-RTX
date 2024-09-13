@@ -5,6 +5,7 @@ public class Vector3 {
 
      /*
      * Funny vector math library that I stole from carlvbn
+     * Also has a lot of shit that I had to add myself 
      * Source can be found here https://github.com/carl-vbn/pure-java-raytracer/blob/master/src/carlvbn/raytracing/math/Vector3.java
      */
 
@@ -72,11 +73,11 @@ public class Vector3 {
     }
 
     public float length() {
-        return (float) Math.sqrt(x*x+y*y+z*z);
+        return (float) Math.sqrt(length_squared());
     }
 
     public double length_squared() {
-        return (x*x+y*y+z*z);
+        return ((x*x)+(y*y)+(z*z));
     }
 
     public boolean near_zero(){
@@ -90,35 +91,16 @@ public class Vector3 {
         return new Vector3(this.x / length, this.y / length, this.z / length);
     }
 
-    public Vector3 rotateYP(float yaw, float pitch) {
-        // Convert to radians
-        double yawRads = Math.toRadians(yaw);
-        double pitchRads = Math.toRadians(pitch);
-
-        // Step one: Rotate around X axis (pitch)
-        float _y = (float) (y*Math.cos(pitchRads) - z*Math.sin(pitchRads));
-        float _z = (float) (y*Math.sin(pitchRads) + z*Math.cos(pitchRads));
-
-        // Step two: Rotate around the Y axis (yaw)
-        float _x = (float) (x*Math.cos(yawRads) + _z*Math.sin(yawRads));
-        _z = (float) (-x*Math.sin(yawRads) + _z*Math.cos(yawRads));
-
-        return new Vector3(_x, _y, _z);
-    }
-
-    /** Does the same as Vector3.add but changes the vector itself instead of returning a new one */
-    public void translate(Vector3 vec) {
-        this.x += vec.x;
-        this.y += vec.y;
-        this.z += vec.z;
-    }
-
     public static float distance(Vector3 a, Vector3 b) {
         return (float) Math.sqrt(Math.pow(a.x - b.x, 2)+Math.pow(a.y - b.y, 2)+Math.pow(a.z - b.z, 2));
     }
 
     public static float dot(Vector3 a, Vector3 b) {
         return a.x * b.x + a.y * b.y + a.z * b.z;
+    }
+
+    public static Vector3 cross(Vector3 a, Vector3 b){
+        return new Vector3(((a.y * b.z) - (b.y * a.z)), ((a.z * b.x) - (b.z * a.x)), ((a.x * b.y) - (b.x * a.y)));
     }
 
     public static Vector3 lerp(Vector3 a, Vector3 b, float t) {
@@ -133,7 +115,7 @@ public class Vector3 {
         return new Vector3(random_double(min,max), random_double(min,max), random_double(min,max));
     }
 
-    public Vector3 unit_vector(Vector3 v) {
+    public static Vector3 unit_vector(Vector3 v) {
         return v.divide(new Vector3(v.length()));
     }
     
@@ -154,8 +136,24 @@ public class Vector3 {
             return new Vector3(0).subtract(on_unit_sphere);
     }
 
+    public static Vector3 random_in_unit_disk() {
+        while (true) {
+            Vector3 p = new Vector3(random_double(-1,1), random_double(-1,1), 0);
+            if (p.length_squared() < 1)
+                return p;
+        }
+    }
+
     public static Vector3 reflect(Vector3 v, Vector3 n) {
         return v.subtract(new Vector3(2)).multiply(new Vector3(dot(v,n))).multiply(n);
+    }
+
+    public static Vector3 refract(Vector3 uv, Vector3 n, double etai_over_etat) {
+        double cos_theta = Math.min(dot(new Vector3().subtract(uv), n), 1.0);
+        Vector3 r_out_perp = (uv.add(n.multiply(cos_theta))).multiply(etai_over_etat);
+        Vector3 r_out_parallel = new Vector3(-Math.sqrt(Math.abs(1.0 - r_out_perp.length_squared()))).multiply(n);
+
+        return r_out_perp.add(r_out_parallel);
     }
 
     @Override
