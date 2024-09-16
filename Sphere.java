@@ -1,18 +1,27 @@
 public class Sphere extends Hittable {
     private Ray center;
     private double radius;
+    public AABB bounding_box;
     public Material material; 
     
     public Sphere(Vector3 static_center, double radius, Material mat){
         this.center = new Ray(static_center, new Vector3(0));
         this.radius = radius;
         this.material = mat;
+
+        Vector3 rvec = new Vector3(this.radius);
+        bounding_box = new AABB(static_center.subtract(rvec), static_center.add(rvec));
     }
 
     public Sphere(Vector3 center1, Vector3 center2, double radius, Material mat){
         this.center = new Ray(center1, center2.subtract(center1));
         this.radius = radius;
         this.material = mat;
+
+        Vector3 rvec = new Vector3(this.radius);
+        AABB box1 = new AABB(center.at(0).subtract(rvec), center.at(0).add(rvec));
+        AABB box2 = new AABB(center.at(1).subtract(rvec), center.at(1).add(rvec));
+        bounding_box = new AABB(box1, box2);
     }
 
     public boolean hit(Ray r, Interval ray_t, hit_record rec){

@@ -3,6 +3,8 @@ public class Hittable{
     public boolean hit(Ray r, Interval ray_t, hit_record rec){
         return false;
     }
+
+    public AABB bounding_box;
 }
 
 class hit_record {

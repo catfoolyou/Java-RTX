@@ -2,6 +2,7 @@
 import java.util.ArrayList;
 
 public class HittableList extends Hittable {
+    private AABB bounding_box;
 
     ArrayList<Hittable> hittable_list = new ArrayList<Hittable>(); 
 
@@ -11,6 +12,7 @@ public class HittableList extends Hittable {
 
     public void add(Hittable h){
         hittable_list.add(h);
+        //bounding_box = new AABB(bounding_box, boundingBox());
     }
 
     public boolean hit(Ray r, Interval ray_t, hit_record rec){
@@ -27,6 +29,10 @@ public class HittableList extends Hittable {
         }
 
         return hit_anything;
-    }    
+    }
+    
+    public AABB boundingBox(){
+        return this.bounding_box;
+    }
 }
  
