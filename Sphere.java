@@ -2,7 +2,9 @@ public class Sphere extends Hittable {
     private Ray center;
     private double radius;
     public AABB bounding_box;
-    public Material material; 
+    public Material material;
+    
+    final static double pi = 3.1415926535897932385;
     
     public Sphere(Vector3 static_center, double radius, Material mat){
         this.center = new Ray(static_center, new Vector3(0));
@@ -53,8 +55,32 @@ public class Sphere extends Hittable {
         rec.p = r.at(rec.t);
         Vector3 outward_normal = (rec.p.subtract(current_center)).divide(new Vector3(radius));
         rec.set_face_normal(r, outward_normal);
+
+        double[] uv = get_sphere_uv(outward_normal, rec.u, rec.v);
+        rec.u = uv[0];
+        rec.v = uv[1];
+
         rec.material = this.material;
 
         return true;
+    }
+
+    public static double[] get_sphere_uv(Vector3 p, double u, double v) {
+        // p: a given point on the sphere of radius one, centered at the origin.
+        // u: returned value [0,1] of angle around the Y axis from X=-1.
+        // v: returned value [0,1] of angle from Y=-1 to Y=+1.
+        //     <1 0 0> yields <0.50 0.50>       <-1  0  0> yields <0.00 0.50>
+        //     <0 1 0> yields <0.50 1.00>       < 0 -1  0> yields <0.50 0.00>
+        //     <0 0 1> yields <0.25 0.50>       < 0  0 -1> yields <0.75 0.50>
+
+        double theta = Math.acos(-p.y);
+        double phi = Math.atan2(-p.z, p.x) + pi;
+
+        double[] array = new double[2];
+
+        array[0] = phi / (2 * pi);
+        array[1] = theta / pi;
+
+        return array;
     }
 }
