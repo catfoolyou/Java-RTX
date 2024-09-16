@@ -1,3 +1,6 @@
+
+import javax.crypto.spec.RC2ParameterSpec;
+
 public class Material {
     public Vector3 albedo;
     public Ray scattered;
@@ -8,11 +11,15 @@ public class Material {
 }
 
 class Lambertian extends Material{
-    public Vector3 albedo;
+    public Texture texture;
     public Ray scattered;
 
     public Lambertian(Vector3 al){
-        this.albedo = al;
+        this.texture = new SolidColor(al);
+    }
+
+    public Lambertian(Texture tex){
+        this.texture = tex;
     }
 
     public boolean scatter(Ray r_in, hit_record rec){
@@ -22,7 +29,7 @@ class Lambertian extends Material{
             scatter_direction = rec.normal;
 
         this.scattered = new Ray(rec.p, scatter_direction, r_in.time);
-        rec.setMaterial(this.albedo, this.scattered);
+        rec.setMaterial(this.texture.value(rec.u, rec.v, rec.p), this.scattered);
         
         return true;
     }

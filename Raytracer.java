@@ -21,7 +21,9 @@ public class Raytracer{
         
         HittableList world = new HittableList();
 
-        Material ground_material = new Lambertian(new Vector3(0.5, 0.5, 0.5));
+        Texture checker = new Checker(3.2, new Vector3(0.2, 0.3, 0.1), new Vector3(0.9, 0.9, 0.9));
+
+        Material ground_material = new Lambertian(checker);
         world.add(new Sphere(new Vector3(0,-1000,0), 1000, ground_material));
 
         for (int a = -11; a < 11; a++) {
@@ -36,8 +38,8 @@ public class Raytracer{
                         // diffuse
                         Vector3 albedo = new Vector3(Math.random(), Math.random(), Math.random());
                         sphere_material = new Lambertian(albedo);
-                        Vector3 center2 = center.add(new Vector3(0, random_double(0, 0.5), 0));
-                        world.add(new Sphere(center, center2, 0.2, sphere_material));
+                        //Vector3 center2 = center.add(new Vector3(0, random_double(0, 0.5), 0));
+                        world.add(new Sphere(center, 0.2, sphere_material));
                     } else if (choose_mat < 0.95) {
                         // metal
                         Vector3 albedo = new Vector3(Math.random(), Math.random(), Math.random());

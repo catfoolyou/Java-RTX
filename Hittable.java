@@ -13,6 +13,7 @@ class hit_record {
     Material material; 
     double t;
     boolean front_face;
+    double u, v;
 
     public void setMaterial(Vector3 albedo, Ray scattered){
         this.material.albedo = albedo;
