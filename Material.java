@@ -21,7 +21,7 @@ class Lambertian extends Material{
         if (scatter_direction.near_zero())
             scatter_direction = rec.normal;
 
-        this.scattered = new Ray(rec.p, scatter_direction);
+        this.scattered = new Ray(rec.p, scatter_direction, r_in.time);
         rec.setMaterial(this.albedo, this.scattered);
         
         return true;
@@ -42,7 +42,7 @@ class Metal extends Material{
         Vector3 reflected = Vector3.reflect(r_in.direction, rec.normal);
         reflected = Vector3.unit_vector(reflected).add(Vector3.random_unit_vector().multiply(fuzz));
 
-        this.scattered = new Ray(rec.p, reflected);
+        this.scattered = new Ray(rec.p, reflected, r_in.time);
 
         rec.setMaterial(this.albedo, this.scattered);
         return Vector3.dot(scattered.direction, rec.normal) > 0;
@@ -73,7 +73,7 @@ class Dielectric extends Material{
         else
             direction = Vector3.refract(unit_direction, rec.normal, ri);
 
-        this.scattered = new Ray(rec.p, direction);
+        this.scattered = new Ray(rec.p, direction, r_in.time);
         rec.setMaterial(attenuation, this.scattered);
         return true;
         

@@ -36,7 +36,8 @@ public class Raytracer{
                         // diffuse
                         Vector3 albedo = new Vector3(Math.random(), Math.random(), Math.random());
                         sphere_material = new Lambertian(albedo);
-                        world.add(new Sphere(center, 0.2, sphere_material));
+                        Vector3 center2 = center.add(new Vector3(0, random_double(0, 0.5), 0));
+                        world.add(new Sphere(center, center2, 0.2, sphere_material));
                     } else if (choose_mat < 0.95) {
                         // metal
                         Vector3 albedo = new Vector3(Math.random(), Math.random(), Math.random());
@@ -64,7 +65,7 @@ public class Raytracer{
         Camera cam = new Camera();
 
         cam.aspect_ratio = 16.0 / 9.0;
-        cam.image_width = 600;
+        cam.image_width = 400;
         cam.samples_per_pixel = 100;
         cam.max_depth = 50;
 

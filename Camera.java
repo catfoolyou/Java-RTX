@@ -3,7 +3,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Vector;
 
 public class Camera {
 
@@ -118,8 +117,9 @@ public class Camera {
 
         Vector3 ray_origin = (defocus_angle <= 0) ? center : defocus_disk_sample();
         Vector3 ray_direction = pixel_sample.subtract(ray_origin);
+        double ray_time = random_double(0, 0.25);
 
-        return new Ray(ray_origin, ray_direction);
+        return new Ray(ray_origin, ray_direction, ray_time);
     }
 
     public Vector3 sample_square(){
