@@ -19,34 +19,32 @@ public class Raytracer{
         
         HittableList world = new HittableList();
 
-        Texture checker = new Checker(3.2, new Vector3(0.2, 0.3, .1), new Vector3(0.9));
+        Material left_red = new Lambertian(new Vector3(1.0, 0.2, 0.2));
+        Material back_green = new Lambertian(new Vector3(0.2, 1.0, 0.2));
+        Material right_blue = new Lambertian(new Vector3(0.2, 0.2, 1.0));
+        Material upper_orange = new Lambertian(new Vector3(1.0, 0.5, 0.0));
+        Material lower_teal = new Lambertian(new Vector3(0.2, 0.8, 0.8));
 
-        Material ground_material = new Lambertian(new ImageTexture("de_grid.png"));
-        world.add(new Sphere(new Vector3(0,-1000,0), 1000, ground_material));
-
-        Material material1 = new Dielectric(1.5);
-        world.add(new Sphere(new Vector3(0, 1, 0), 1.0, material1));
-
-        Material material2 = new Lambertian(new Vector3(0.4, 0.2, 0.1));
-        world.add(new Sphere(new Vector3(-4, 1, 0), 1.0, material2));
-
-        Material material3 = new Metal(new Vector3(0.7, 0.6, 0.5), 0.0);
-        world.add(new Sphere(new Vector3(4, 1, 0), 1.0, material3));
+        // Quads
+        world.add(new Quad(new Vector3(-3,-2, 5), new Vector3(0, 0,-4), new Vector3(0, 4, 0), left_red));
+        world.add(new Quad(new Vector3(-2,-2, 0), new Vector3(4, 0, 0), new Vector3(0, 4, 0), back_green));
+        world.add(new Quad(new Vector3( 3,-2, 1), new Vector3(0, 0, 4), new Vector3(0, 4, 0), right_blue));
+        world.add(new Quad(new Vector3(-2, 3, 1), new Vector3(4, 0, 0), new Vector3(0, 0, 4), upper_orange));
+        world.add(new Quad(new Vector3(-2,-3, 5), new Vector3(4, 0, 0), new Vector3(0, 0,-4), lower_teal));
 
         Camera cam = new Camera();
 
-        cam.aspect_ratio = 16.0 / 9.0;
+        cam.aspect_ratio = 1.0;
         cam.image_width = 400;
         cam.samples_per_pixel = 100;
         cam.max_depth = 50;
 
-        cam.vfov = 20;
-        cam.lookfrom = new Vector3(13,2,3);
+        cam.vfov = 80;
+        cam.lookfrom = new Vector3(0,0,9);
         cam.lookat = new Vector3(0,0,0);
         cam.up = new Vector3(0,1,0);
 
-        cam.defocus_angle = 0.6;
-        cam.focus_dist = 10.0;
+        cam.defocus_angle = 0;
 
         cam.render(world);
     }

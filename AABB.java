@@ -7,18 +7,30 @@ public class AABB {
         this.x = x;
         this.y = y;
         this.z = z;
+
+        pad_to_minimums();
     }
 
     public AABB(Vector3 a, Vector3 b){
         this.x = (a.x <= b.x) ? new Interval(a.x, b.x) : new Interval(b.x, a.x);
         this.y = (a.y <= b.y) ? new Interval(a.y, b.y) : new Interval(b.y, a.y);
         this.z = (a.z <= b.z) ? new Interval(a.z, b.z) : new Interval(b.z, a.z);
+
+        pad_to_minimums();
     }
 
     public AABB(AABB box0, AABB box1){
         this.x = new Interval(box0.x, box1.x);
         this.y = new Interval(box0.y, box1.y);
         this.z = new Interval(box0.z, box1.z);
+    }
+
+    private void pad_to_minimums() {
+        // Adjust the AABB so that no side is narrower than some delta, padding if necessary.
+        double delta = 0.0001;
+        if (x.size() < delta) x = x.expand(delta);
+        if (y.size() < delta) y = y.expand(delta);
+        if (z.size() < delta) z = z.expand(delta);
     }
 
     public Interval axis_interval(int n){ 

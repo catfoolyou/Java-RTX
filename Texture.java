@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 public class Texture {
     public Vector3 albedo;
