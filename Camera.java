@@ -17,6 +17,7 @@ public class Camera {
     int image_width  = 400;  // Rendered image width in pixel count
     int samples_per_pixel = 10;
     int max_depth = 10;
+    Vector3 background;
 
     int image_height;   // Rendered image height
     Vector3 center;         // Camera center
@@ -139,23 +140,30 @@ public class Camera {
 
         hit_record rec = new hit_record();
 
+        if (!world.hit(r, new Interval(0.001, infinity), rec))
+            return background;
+
         if (world.hit(r, new Interval(0.001, infinity), rec)) {
             
             Vector3 attenuation = rec.normal.add(Vector3.random_unit_vector());
             Ray scattered = new Ray(rec.p, attenuation);
+            Vector3 color_from_emission = rec.material.emitted(rec.u, rec.v, rec.p);
             
             if (rec.material.scatter(r, rec)){
                 attenuation = rec.material.albedo;
                 scattered = rec.material.scattered;
                 
-                return attenuation.multiply(ray_color(scattered, depth-1, world));
-                //return ray_color(scattered, depth-1, world).multiply(0.5);
+                return attenuation.multiply(ray_color(scattered, depth-1, world)).add(color_from_emission);
             }
+
+            if (!rec.material.scatter(r, rec))
+                return color_from_emission;
+
             return new Vector3(0,0,0);
         }
 
         Vector3 unit_direction = (r.direction);
         float a = (float) (0.5 * (unit_direction.y + 1.0));
-        return new Vector3(1).multiply((float) 1.0 - a).add(new Vector3(0.5, 0.7, 1.0).multiply(a));
+        return new Vector3(1).multiply((float) 1.0 - a).add(background.multiply(a));
     }
 }

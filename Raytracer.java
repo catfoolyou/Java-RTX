@@ -19,29 +19,32 @@ public class Raytracer{
         
         HittableList world = new HittableList();
 
-        Material left_red = new Lambertian(new Vector3(1.0, 0.2, 0.2));
-        Material back_green = new Lambertian(new Vector3(0.2, 1.0, 0.2));
-        Material right_blue = new Lambertian(new Vector3(0.2, 0.2, 1.0));
-        Material upper_orange = new Lambertian(new Vector3(1.0, 0.5, 0.0));
-        Material lower_teal = new Lambertian(new Vector3(0.2, 0.8, 0.8));
+        Material red = new Lambertian(new Vector3(.65, .05, .05));
+        Material white = new Lambertian(new Vector3(.73, .73, .73));
+        Material green = new Lambertian(new Vector3(.12, .45, .15));
+        Material light = new DiffuseLight(new Vector3(15, 15, 15));
 
-        // Quads
-        world.add(new Quad(new Vector3(-3,-2, 5), new Vector3(0, 0,-4), new Vector3(0, 4, 0), left_red));
-        world.add(new Quad(new Vector3(-2,-2, 0), new Vector3(4, 0, 0), new Vector3(0, 4, 0), back_green));
-        world.add(new Quad(new Vector3( 3,-2, 1), new Vector3(0, 0, 4), new Vector3(0, 4, 0), right_blue));
-        world.add(new Quad(new Vector3(-2, 3, 1), new Vector3(4, 0, 0), new Vector3(0, 0, 4), upper_orange));
-        world.add(new Quad(new Vector3(-2,-3, 5), new Vector3(4, 0, 0), new Vector3(0, 0,-4), lower_teal));
+        world.add(new Quad(new Vector3(555,0,0), new Vector3(0,555,0), new Vector3(0,0,555), green));
+        world.add(new Quad(new Vector3(0,0,0), new Vector3(0,555,0), new Vector3(0,0,555), red));
+        world.add(new Quad(new Vector3(343, 554, 332), new Vector3(-130,0,0), new Vector3(0,0,-105), light));
+        world.add(new Quad(new Vector3(0,0,0), new Vector3(555,0,0), new Vector3(0,0,555), white));
+        world.add(new Quad(new Vector3(555,555,555), new Vector3(-555,0,0), new Vector3(0,0,-555), white));
+        world.add(new Quad(new Vector3(0,0,555), new Vector3(555,0,0), new Vector3(0,555,0), white));
+
+        world.add(Quad.box(new Vector3(130, 0, 65), new Vector3(295, 165, 230), white));
+        world.add(Quad.box(new Vector3(265, 0, 295), new Vector3(430, 330, 460), white));
 
         Camera cam = new Camera();
 
         cam.aspect_ratio = 1.0;
         cam.image_width = 400;
-        cam.samples_per_pixel = 100;
+        cam.samples_per_pixel = 50;
         cam.max_depth = 50;
+        cam.background = new Vector3(0,0,0);
 
-        cam.vfov = 80;
-        cam.lookfrom = new Vector3(0,0,9);
-        cam.lookat = new Vector3(0,0,0);
+        cam.vfov = 40;
+        cam.lookfrom = new Vector3(278, 278, -800);
+        cam.lookat = new Vector3(278, 278, 0);
         cam.up = new Vector3(0,1,0);
 
         cam.defocus_angle = 0;

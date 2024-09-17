@@ -22,7 +22,7 @@ public class Quad extends Hittable {
         set_bounding_box();
     }
 
-    public void set_bounding_box() {
+    public void set_bounding_box(){
         // Compute the bounding box of all four vertices.
         AABB bbox_diagonal1 = new AABB(q, q.add(u).add(v));
         AABB bbox_diagonal2 = new AABB(q.add(u), q.add(v));
@@ -69,4 +69,25 @@ public class Quad extends Hittable {
         rec.v = b;
         return true;
     }
+
+    public static HittableList box(Vector3 a, Vector3 b, Material mat){
+        HittableList sides = new HittableList();
+
+        Vector3 min = new Vector3(Math.min(a.x,b.x), Math.min(a.y,b.y), Math.min(a.z,b.z));
+        Vector3 max = new Vector3(Math.max(a.x,b.x), Math.max(a.y,b.y), Math.max(a.z,b.z));
+
+        Vector3 dx = new Vector3(max.x - min.x, 0, 0);
+        Vector3 dy = new Vector3(0, max.y - min.y, 0);
+        Vector3 dz = new Vector3(0, 0, max.z - min.z);
+
+        sides.add(new Quad(new Vector3(min.x, min.y, max.z),  dx,  dy, mat)); // front
+        sides.add(new Quad(new Vector3(max.x, min.y, max.z), new Vector3(0).subtract(dz),  dy, mat)); // right
+        sides.add(new Quad(new Vector3(max.x, min.y, min.z), new Vector3(0).subtract(dx),  dy, mat)); // back
+        sides.add(new Quad(new Vector3(min.x, min.y, min.z),  dz,  dy, mat)); // left
+        sides.add(new Quad(new Vector3(min.x, max.y, max.z),  dx, new Vector3(0).subtract(dz), mat)); // top
+        sides.add(new Quad(new Vector3(min.x, min.y, min.z),  dx,  dz, mat)); // bottom
+
+        return sides;
+    }
+    
 }
