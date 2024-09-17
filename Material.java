@@ -36,12 +36,17 @@ class Lambertian extends Material{
 }
 
 class Metal extends Material{
-    public Vector3 albedo;
+    public Texture texture;
     public Ray scattered;
     private double fuzz;
 
     public Metal(Vector3 albedo, double fuzz){
-        this.albedo = albedo;
+        this.texture = new SolidColor(albedo);
+        this.fuzz = fuzz;
+    }
+
+    public Metal(Texture tex, double fuzz){
+        this.texture = tex;
         this.fuzz = fuzz;
     }
 
@@ -51,7 +56,7 @@ class Metal extends Material{
 
         this.scattered = new Ray(rec.p, reflected, r_in.time);
 
-        rec.setMaterial(this.albedo, this.scattered);
+        rec.setMaterial(this.texture.value(rec.u, rec.v, rec.p), this.scattered);
         return Vector3.dot(scattered.direction, rec.normal) > 0;
     }
 }

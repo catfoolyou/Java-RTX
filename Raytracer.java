@@ -19,7 +19,9 @@ public class Raytracer{
         
         HittableList world = new HittableList();
 
-        Material ground_material = new Lambertian(new ImageTexture("de_grid.jpg"));
+        Texture checker = new Checker(3.2, new Vector3(0.2, 0.3, .1), new Vector3(0.9));
+
+        Material ground_material = new Lambertian(new ImageTexture("de_grid.png"));
         world.add(new Sphere(new Vector3(0,-1000,0), 1000, ground_material));
 
         Material material1 = new Dielectric(1.5);
