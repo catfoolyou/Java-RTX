@@ -1,5 +1,3 @@
-
-import java.io.File;
 import java.io.IOException;
 
 public class Raytracer{
@@ -19,9 +17,9 @@ public class Raytracer{
         
         HittableList world = new HittableList();
 
-        Material red = new Lambertian(new Vector3(.65, .05, .05));
-        Material white = new Lambertian(new Vector3(.73, .73, .73));
-        Material green = new Lambertian(new Vector3(.12, .45, .15));
+        Material red = new Lambertian(new Vector3(0.65, 0.05, 0.05));
+        Material white = new Lambertian(new Vector3(0.878,0.855,0.729));
+        Material green = new Lambertian(new Vector3(0.12, 0.45, 0.15));
         Material light = new DiffuseLight(new Vector3(15, 15, 15));
 
         world.add(new Quad(new Vector3(555,0,0), new Vector3(0,555,0), new Vector3(0,0,555), green));
@@ -34,12 +32,22 @@ public class Raytracer{
         world.add(Quad.box(new Vector3(130, 0, 65), new Vector3(295, 165, 230), white));
         world.add(Quad.box(new Vector3(265, 0, 295), new Vector3(430, 330, 460), white));
 
+        /*Hittable box1 = Quad.box(new Vector3(0,0,0), new Vector3(165,330,165), white);
+        box1 = new RotateY(box1, 15);
+        box1 = new Translate(box1, new Vector3(265,0,295));
+        world.add(box1);
+    
+        Hittable box2 = Quad.box(new Vector3(0,0,0), new Vector3(165,165,165), white);
+        box2 = new RotateY(box2, -18);
+        box2 = new Translate(box2, new Vector3(130,0,65));
+        world.add(box2);*/
+
         Camera cam = new Camera();
 
         cam.aspect_ratio = 1.0;
-        cam.image_width = 400;
-        cam.samples_per_pixel = 50;
-        cam.max_depth = 50;
+        cam.image_width = 600; // use 640 x 400 px
+        cam.samples_per_pixel = 100; // use 512
+        cam.max_depth = 3; // use 48
         cam.background = new Vector3(0,0,0);
 
         cam.vfov = 40;

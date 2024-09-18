@@ -17,6 +17,10 @@ public class Interval {
         this.max = a.max >= b.max ? a.max : b.max;
     }
 
+    public Interval add(double d){
+        return new Interval(this.min + d, this.max + d);
+    }
+
     public double size(){
         return max - min;
     }

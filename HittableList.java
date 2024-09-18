@@ -1,18 +1,17 @@
-
 import java.util.ArrayList;
 
 public class HittableList extends Hittable {
-    private AABB bounding_box;
+    public AABB bounding_box = new AABB();
 
-    ArrayList<Hittable> hittable_list = new ArrayList<Hittable>(); 
+    ArrayList<Hittable> objects = new ArrayList<Hittable>(); 
 
     public void clear(){
-        hittable_list.clear();
+        objects.clear();
     }
 
-    public void add(Hittable h){
-        hittable_list.add(h);
-        //bounding_box = new AABB(bounding_box, boundingBox());
+    public void add(Hittable object){
+        objects.add(object);
+        //this.bounding_box = new AABB(this.bounding_box, object.bounding_box);
     }
 
     public boolean hit(Ray r, Interval ray_t, hit_record rec){
@@ -20,7 +19,7 @@ public class HittableList extends Hittable {
         boolean hit_anything = false;
         double closest_so_far = ray_t.max;
 
-        for(Hittable h : hittable_list) {
+        for(Hittable h : objects) {
             if (h.hit(r, new Interval(ray_t.min, closest_so_far), temp_rec)) {
                 hit_anything = true;
                 closest_so_far = temp_rec.t;
@@ -29,10 +28,6 @@ public class HittableList extends Hittable {
         }
 
         return hit_anything;
-    }
-    
-    public AABB boundingBox(){
-        return this.bounding_box;
     }
 }
  

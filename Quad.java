@@ -6,7 +6,7 @@ public class Quad extends Hittable {
     private Vector3 normal;
     public double d;
     public Material material;
-    public AABB bbox;
+    public AABB bounding_box;
 
     public Quad(Vector3 q, Vector3 u, Vector3 v, Material mat){
         this.q = q;
@@ -19,14 +19,9 @@ public class Quad extends Hittable {
         this.d = Vector3.dot(normal, q);
         this.w = n.divide(new Vector3(Vector3.dot(n, n)));
 
-        set_bounding_box();
-    }
-
-    public void set_bounding_box(){
-        // Compute the bounding box of all four vertices.
         AABB bbox_diagonal1 = new AABB(q, q.add(u).add(v));
         AABB bbox_diagonal2 = new AABB(q.add(u), q.add(v));
-        this.bbox = new AABB(bbox_diagonal1, bbox_diagonal2);
+        this.bounding_box = new AABB(bbox_diagonal1, bbox_diagonal2);
     }
 
     public boolean hit(Ray r, Interval ray_t, hit_record rec){
@@ -86,6 +81,8 @@ public class Quad extends Hittable {
         sides.add(new Quad(new Vector3(min.x, min.y, min.z),  dz,  dy, mat)); // left
         sides.add(new Quad(new Vector3(min.x, max.y, max.z),  dx, new Vector3(0).subtract(dz), mat)); // top
         sides.add(new Quad(new Vector3(min.x, min.y, min.z),  dx,  dz, mat)); // bottom
+
+        //sides.bounding_box = new AABB(min, max);
 
         return sides;
     }

@@ -3,6 +3,8 @@ public class Vector3 {
     public float y;
     public float z;
 
+    final static double pi = 3.1415926535897932385;
+
      /*
      * Funny vector math library that I stole from carlvbn
      * Also has a lot of shit that I had to add myself 
@@ -35,6 +37,10 @@ public class Vector3 {
         x = (float) oneCoord;
         y = (float) oneCoord;
         z = (float) oneCoord;
+    }
+
+    static double degrees_to_radians(double degrees) {
+        return degrees * pi / 180.0;
     }
 
     public static double random_double() {

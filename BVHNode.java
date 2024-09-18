@@ -6,7 +6,7 @@ public class BVHNode extends Hittable {
     public Hittable right;
 
     public BVHNode(HittableList list){
-        new BVHNode(list.hittable_list, 0, list.hittable_list.size());
+        new BVHNode(list.objects, 0, list.objects.size());
     }
 
     public BVHNode(ArrayList<Hittable> hittable_list, int start, int end){

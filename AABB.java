@@ -25,6 +25,13 @@ public class AABB {
         this.z = new Interval(box0.z, box1.z);
     }
 
+    public AABB add(Vector3 vec){
+        Interval xx = new Interval(this.x.min + vec.x, this.x.max + vec.x);
+        Interval yy = new Interval(this.y.min + vec.y, this.y.max + vec.y);
+        Interval zz = new Interval(this.z.min + vec.z, this.z.max + vec.z);
+        return new AABB(xx, yy, zz);
+    }
+
     private void pad_to_minimums() {
         // Adjust the AABB so that no side is narrower than some delta, padding if necessary.
         double delta = 0.0001;
