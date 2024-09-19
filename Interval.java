@@ -3,8 +3,8 @@ public class Interval {
     double max;
 
     public Interval(){
-        min = Double.POSITIVE_INFINITY;
-        max = Double.NEGATIVE_INFINITY;
+        this.min = Double.POSITIVE_INFINITY;
+        this.max = Double.NEGATIVE_INFINITY;
     }
 
     public Interval(double min, double max){

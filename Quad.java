@@ -82,8 +82,6 @@ public class Quad extends Hittable {
         sides.add(new Quad(new Vector3(min.x, max.y, max.z),  dx, new Vector3(0).subtract(dz), mat)); // top
         sides.add(new Quad(new Vector3(min.x, min.y, min.z),  dx,  dz, mat)); // bottom
 
-        //sides.bounding_box = new AABB(min, max);
-
         return sides;
     }
     

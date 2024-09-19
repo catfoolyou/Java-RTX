@@ -14,7 +14,7 @@ class Translate extends Hittable{
     public Translate(Hittable object, Vector3 offset){
         this.object = object;
         this.offset = offset;
-        this.bounding_box = object.bounding_box.add(offset);
+        this.bounding_box = new AABB();
     }
 
 
@@ -46,7 +46,7 @@ class RotateY extends Hittable{
         double radians = Vector3.degrees_to_radians(angle);
         this.sin_theta = Math.sin(radians);
         this.cos_theta = Math.cos(radians);
-        this.bounding_box = object.bounding_box;
+        this.bounding_box = new AABB(new Interval(0, 1), new Interval(0, 1), new Interval(0, 1));
 
         Vector3 min = new Vector3( infinity,  infinity,  infinity);
         Vector3 max = new Vector3(-infinity, -infinity, -infinity);
