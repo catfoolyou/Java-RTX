@@ -1,8 +1,12 @@
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
+import javax.imageio.ImageIO;
+import static javax.swing.WindowConstants.*;
 
 public class Camera {
 
@@ -82,12 +86,20 @@ public class Camera {
     public void render(Hittable world) throws IOException {
         initialize();
 
-        image.delete();
-        BufferedWriter writer = new BufferedWriter(new FileWriter(image.getAbsoluteFile()));
+        JFrame frame = new JFrame();
+        frame.setSize(new Dimension(this.image_width, this.image_height));
+        frame.setTitle("Raytracer");
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        BufferedImage result = new BufferedImage(this.image_width, this.image_height, TYPE_INT_RGB);
+
+        JLabel img = new JLabel(new ImageIcon(result));
+        frame.add(img);
+        frame.pack();
 
         long startTime = System.currentTimeMillis();
-        
-        writer.write("P3\n" + image_width + " " + image_height + "\n" + "255\n");
 
         for (int j = 0; j < image_height; j++) {
             System.out.println("Scanlines remaining: " + (image_height - j));
@@ -100,14 +112,21 @@ public class Camera {
                     pixel_color = pixel_color.add(ray_color(r, max_depth, world));
                 }
 
-                WriteColor.write_color(writer, pixel_color.multiply(pixel_samples_scale));
+                Vector3 color = WriteColor.write_color(pixel_color.multiply(pixel_samples_scale));
+                int rgb = (int) (65536 * color.x + 256 * color.y + color.z);
+                result.setRGB(i, j, rgb);
+                img.repaint();
             }
         }
-        writer.close();
 
         long endTime = System.currentTimeMillis();
         System.out.println("Done! (" + (endTime - startTime) / 1000.0 + " s)");
+
+        File outputfile = new File("result.jpg");
+        ImageIO.write(result, "jpg", outputfile);
     }
+
+
 
     public Ray get_ray(int i, int j){
         // Construct a camera ray originating from the origin and directed at randomly sampled

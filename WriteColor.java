@@ -1,4 +1,3 @@
-import java.io.BufferedWriter;
 import java.io.IOException;
 
 public class WriteColor {
@@ -9,8 +8,7 @@ public class WriteColor {
         return 0;
     }
 
-
-    public static void write_color(BufferedWriter writerin, float r2, float g2, float b2) throws IOException{        
+    public static Vector3 write_color(float r2, float g2, float b2) throws IOException{        
         float r = r2;
         float g = g2;
         float b = b2;
@@ -25,12 +23,10 @@ public class WriteColor {
         int ig = (int) (256 * intensity.clamp(g));
         int ib = (int) (256 * intensity.clamp(b));
 
-        String output = (ir + " " + ig + " " + ib + "\n");                
-        writerin.write(output);
-
+        return new Vector3(ir, ig, ib);            
     }
 
-    public static void write_color(BufferedWriter writerin, Vector3 vec) throws IOException{        
+    public static Vector3 write_color(Vector3 vec) throws IOException{        
         float r = vec.x;
         float g = vec.y;
         float b = vec.z;
@@ -45,8 +41,6 @@ public class WriteColor {
         int ig = (int) (256 * intensity.clamp(g));
         int ib = (int) (256 * intensity.clamp(b));
 
-        String output = (ir + " " + ig + " " + ib + "\n");                
-        writerin.write(output);
-
+        return new Vector3(ir, ig, ib);             
     }
 }
