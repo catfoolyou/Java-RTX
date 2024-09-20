@@ -20,6 +20,7 @@ public class Raytracer{
         Material red = new Lambertian(new Vector3(0.65, 0.05, 0.05));
         Material white = new Lambertian(new Vector3(0.73));
         Material green = new Lambertian(new Vector3(0.12, 0.45, 0.15));
+        Material metal = new Metal(new Vector3(0.7), 0.01);
         Material light = new DiffuseLight(new Vector3(15, 15, 15));
 
         world.add(new Quad(new Vector3(555,0,0), new Vector3(0,555,0), new Vector3(0,0,555), green));
@@ -29,7 +30,7 @@ public class Raytracer{
         world.add(new Quad(new Vector3(555,555,555), new Vector3(-555,0,0), new Vector3(0,0,-555), white));
         world.add(new Quad(new Vector3(0,0,555), new Vector3(555,0,0), new Vector3(0,555,0), white));
 
-        Hittable box1 = Quad.box(new Vector3(0,0,0), new Vector3(165,330,165), white);
+        Hittable box1 = Quad.box(new Vector3(0,0,0), new Vector3(165,330,165), metal);
         box1 = new RotateY(box1, 15);
         box1 = new Translate(box1, new Vector3(265,0,295));
         world.add(box1);
@@ -66,7 +67,6 @@ public class Raytracer{
         cam.defocus_angle = 0;
 
         cam.render(world);
-        //cam.testRender();
     }
 
     public static void main(String[] args) throws IOException {
