@@ -6,13 +6,13 @@ public class ConstantMedium extends Hittable{
     public ConstantMedium(Hittable boundary, double density, Texture tex){
         this.boundary = boundary;
         this.neg_inv_density = -1/density;
-        this.phase_function = new Isotropic(tex);
+        this.phase_function = new Lambertian(tex);
     }
 
     public ConstantMedium(Hittable boundary, double density, Vector3 albedo){
         this.boundary = boundary;
         this.neg_inv_density = -1/density;
-        this.phase_function = new Isotropic(albedo);
+        this.phase_function = new Lambertian(albedo);
     }
 
     public boolean hit(Ray r, Interval ray_t, hit_record rec){
