@@ -123,7 +123,11 @@ public class Camera {
         System.out.println("Done! (" + (endTime - startTime) / 1000.0 + " s)");
 
         File outputfile = new File("result.jpg");
-        ImageIO.write(result, "jpg", outputfile);
+
+        int option = JOptionPane.showConfirmDialog(frame, "Save to file?", "Render completed", JOptionPane.YES_NO_OPTION);
+        if(option == JOptionPane.YES_OPTION)
+            ImageIO.write(result, "jpg", outputfile); 
+        
     }
 
 
