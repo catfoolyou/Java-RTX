@@ -1,5 +1,7 @@
 # Java-RTX
-Basic java raytracer based on the Raytracing in one weekend series and some other code I stole off the internet. I have yet to make a proper sceneloader so deal with this hardcoded shit for now, hopefully I will make a proper sceneloader and API for this project at some point.
+Basic java raytracer based on the Raytracing in one weekend series and some other code I stole off the internet. 
+
+I have yet to make a proper sceneloader so deal with this hardcoded shit for now, hopefully I will make a proper sceneloader and API for this project at some point.
 
 ## API
 Define a new scene like this:
