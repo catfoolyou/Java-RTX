@@ -1,5 +1,5 @@
 # Java-RTX
-Basic java raytracer based on the Raytracing in one weekend series and some other code I stole off the internet. 
+Basic java raytracer based on the Raytracing In One Weekend series and some other code I stole off the internet. 
 
 I have yet to make a proper sceneloader so deal with this hardcoded shit for now, hopefully I will make a proper sceneloader and API for this project at some point.
 
@@ -67,13 +67,6 @@ world.add(new ConstantMedium(box1, 0.01, new Vector3(0,0,0)));
 world.add(new ConstantMedium(box2, 0.01, new Vector3(1,1,1)));
 ```
 
-Note that `boxes` are the only things that can be translated and rotated
-
-You can also add smoke/volumes like this
-```java
-world.add(new ConstantMedium(box1, 0.01, new Vector3(0,0,0)));
-world.add(new ConstantMedium(box2, 0.01, new Vector3(1,1,1)));
-```
 Though they do look kinda wierd...
 
 ## Link to the original tutorials: 
