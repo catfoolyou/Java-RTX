@@ -66,20 +66,7 @@ You can also add smoke/volumes like this
 world.add(new ConstantMedium(box1, 0.01, new Vector3(0,0,0)));
 world.add(new ConstantMedium(box2, 0.01, new Vector3(1,1,1)));
 ```
-Though they do look kinda wierd...
 
-## Link to the original tutorials: 
-
-https://raytracing.github.io/books/RayTracingInOneWeekend.html
-
-https://raytracing.github.io/books/RayTracingTheNextWeek.html
-
-
-Hittable box1 = Quad.box(new Vector3(0,0,0), new Vector3(165,330,165), metal);
-box1 = new RotateY(box1, 15);
-box1 = new Translate(box1, new Vector3(265,0,295));
-world.add(box1);
-```
 Note that `boxes` are the only things that can be translated and rotated
 
 You can also add smoke/volumes like this
