@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.warnings = false
+    options.compilerArgs << "-Xmaxerrs" << "1000"
+}
+
+application {
+    mainClass = 'main.java.net.raytracer.Raytracer'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'main.java.net.raytracer.Raytracer'
+        )
+    }
+}
