@@ -1,4 +1,4 @@
-package main.java.net.raytracer;
+package net.raytracer;
 import java.io.IOException;
 
 public class DefaultScenes {

@@ -1,4 +1,4 @@
-package main.java.net.raytracer;
+package net.raytracer;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

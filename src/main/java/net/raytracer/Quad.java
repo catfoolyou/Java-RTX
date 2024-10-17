@@ -1,4 +1,4 @@
-package main.java.net.raytracer;
+package net.raytracer;
 
 public class Quad extends Hittable {
     private Vector3 q;

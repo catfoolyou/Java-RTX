@@ -1,4 +1,4 @@
-package main.java.net.raytracer;
+package net.raytracer;
 
 import java.io.File;
 import java.io.IOException;

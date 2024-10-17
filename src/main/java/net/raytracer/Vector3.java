@@ -1,4 +1,4 @@
-package main.java.net.raytracer;
+package net.raytracer;
 
 public class Vector3 {
     public float x;
