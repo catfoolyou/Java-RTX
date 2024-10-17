@@ -1,4 +1,7 @@
-package net.raytracer;
+package net.raytracer.util;
+import net.raytracer.math.Interval;
+import net.raytracer.math.Vector3;
+
 import java.io.IOException;
 
 public class WriteColor {
@@ -9,7 +12,7 @@ public class WriteColor {
         return 0;
     }
 
-    public static Vector3 write_color(float r2, float g2, float b2) throws IOException{        
+    public static Vector3 write_color(float r2, float g2, float b2) throws IOException{
         float r = r2;
         float g = g2;
         float b = b2;

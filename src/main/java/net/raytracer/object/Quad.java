@@ -1,4 +1,10 @@
-package net.raytracer;
+package net.raytracer.object;
+
+import net.raytracer.math.Interval;
+import net.raytracer.math.Ray;
+import net.raytracer.math.Vector3;
+import net.raytracer.util.AABB;
+import net.raytracer.util.Material;
 
 public class Quad extends Hittable {
     private Vector3 q;
@@ -25,7 +31,7 @@ public class Quad extends Hittable {
         this.bounding_box = new AABB(bbox_diagonal1, bbox_diagonal2);
     }
 
-    public boolean hit(Ray r, Interval ray_t, hit_record rec){
+    public boolean hit(Ray r, Interval ray_t, HitRecord rec){
         float denom = Vector3.dot(normal, r.direction);
 
         // No hit if the ray is parallel to the plane.
@@ -53,7 +59,7 @@ public class Quad extends Hittable {
         return true;
     }
 
-    private boolean is_interior(double a, double b, hit_record rec){
+    private boolean is_interior(double a, double b, HitRecord rec){
         Interval unit_interval = new Interval(0, 1);
         // Given the hit point in plane coordinates, return false if it is outside the
         // primitive, otherwise set the hit record UV coordinates and return true.

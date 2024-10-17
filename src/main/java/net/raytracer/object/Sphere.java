@@ -1,4 +1,7 @@
-package net.raytracer;
+package net.raytracer.object;
+
+import net.raytracer.math.*;
+import net.raytracer.util.*;
 
 public class Sphere extends Hittable {
     private Ray center;
@@ -28,7 +31,7 @@ public class Sphere extends Hittable {
         bounding_box = new AABB(box1, box2);
     }
 
-    public boolean hit(Ray r, Interval ray_t, hit_record rec){
+    public boolean hit(Ray r, Interval ray_t, HitRecord rec){
         if((this.center.direction.x + this.center.direction.y + this.center.direction.z) != 1.0){
             this.center.direction = new Vector3(0);
         }

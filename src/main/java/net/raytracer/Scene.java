@@ -1,5 +1,8 @@
 package net.raytracer;
 
+import net.raytracer.object.*;
+import net.raytracer.util.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package net.raytracer;
+package net.raytracer.math;
 
 public class Vector3 {
     public float x;
@@ -41,7 +41,7 @@ public class Vector3 {
         z = (float) oneCoord;
     }
 
-    static double degrees_to_radians(double degrees) {
+    public static double degrees_to_radians(double degrees) {
         return degrees * pi / 180.0;
     }
 

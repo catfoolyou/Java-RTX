@@ -1,4 +1,9 @@
 package net.raytracer;
+
+import net.raytracer.math.*;
+import net.raytracer.object.*;
+import net.raytracer.util.*;
+
 import java.io.IOException;
 
 public class DefaultScenes {

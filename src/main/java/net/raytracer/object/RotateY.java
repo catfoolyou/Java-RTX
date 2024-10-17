@@ -1,41 +1,11 @@
-package net.raytracer;
+package net.raytracer.object;
 
-public class Hittable{
-    public AABB bounding_box;
+import net.raytracer.math.Interval;
+import net.raytracer.math.Ray;
+import net.raytracer.math.Vector3;
+import net.raytracer.util.AABB;
 
-    public boolean hit(Ray r, Interval ray_t, hit_record rec){
-        return false;
-    }
-}
-
-class Translate extends Hittable{
-    private Hittable object;
-    private Vector3 offset;
-    public AABB bounding_box;
-
-    public Translate(Hittable object, Vector3 offset){
-        this.object = object;
-        this.offset = offset;
-        this.bounding_box = new AABB();
-    }
-
-
-    public boolean hit(Ray r, Interval ray_t, hit_record rec){
-        // Move the ray backwards by the offset
-        Ray offset_r = new Ray(r.origin.subtract(offset), r.direction, r.time);
-
-        // Determine whether an intersection exists along the offset ray (and if so, where)
-        if (!object.hit(offset_r, ray_t, rec))
-            return false;
-
-        // Move the intersection point forwards by the offset
-        rec.p = rec.p.add(offset);
-
-        return true;
-    }
-}
-
-class RotateY extends Hittable{
+public class RotateY extends Hittable{
     private Hittable object;
     public AABB bounding_box;
     double sin_theta;
@@ -83,7 +53,7 @@ class RotateY extends Hittable{
         this.bounding_box = new AABB(min, max);
     }
 
-    public boolean hit(Ray r, Interval ray_t, hit_record rec){
+    public boolean hit(Ray r, Interval ray_t, HitRecord rec){
 
         // Transform the ray from world space to object space.
 
@@ -122,24 +92,4 @@ class RotateY extends Hittable{
 
         return true;
     }
-}
-
-class hit_record {
-    Vector3 p;
-    Vector3 normal;
-    Material material; 
-    double t;
-    boolean front_face;
-    double u, v;
-
-    public void setMaterial(Vector3 albedo, Ray scattered){
-        this.material.albedo = albedo;
-        this.material.scattered = scattered;
-    }
-
-    void set_face_normal(Ray r, Vector3 outward_normal) {
-        front_face = Vector3.dot(r.direction, outward_normal) < 0;
-        normal = front_face ? outward_normal : new Vector3(0).subtract(outward_normal);
-    }
-
 }

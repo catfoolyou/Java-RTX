@@ -1,8 +1,8 @@
-package net.raytracer;
+package net.raytracer.math;
 
 public class Interval {
-    double min;
-    double max;
+    public double min;
+    public double max;
 
     public Interval(){
         this.min = Double.POSITIVE_INFINITY;
@@ -27,21 +27,21 @@ public class Interval {
         return max - min;
     }
 
-    boolean contains(double x){
+    public boolean contains(double x){
         return min <= x && x <= max;
     }
     
-    boolean surrounds(double x){
+    public boolean surrounds(double x){
         return min < x && x < max;
     }
 
-    double clamp(double x){
+    public double clamp(double x){
         if (x < min) return min;
         if (x > max) return max;
         return x;
     }
 
-    Interval expand(double delta){
+    public Interval expand(double delta){
         double padding = delta / 2;
         return new Interval(min - padding, max + padding);
     }

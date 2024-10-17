@@ -1,4 +1,9 @@
-package net.raytracer;
+package net.raytracer.object;
+
+import net.raytracer.math.Interval;
+import net.raytracer.math.Ray;
+import net.raytracer.math.Vector3;
+import net.raytracer.util.*;
 
 public class ConstantMedium extends Hittable{
     private Hittable boundary;
@@ -17,9 +22,9 @@ public class ConstantMedium extends Hittable{
         this.phase_function = new Lambertian(albedo);
     }
 
-    public boolean hit(Ray r, Interval ray_t, hit_record rec){
-        hit_record rec1 = new hit_record();
-        hit_record rec2 = new hit_record();
+    public boolean hit(Ray r, Interval ray_t, HitRecord rec){
+        HitRecord rec1 = new HitRecord();
+        HitRecord rec2 = new HitRecord();
 
         if (!boundary.hit(r, Interval.universe, rec1))
             return false;

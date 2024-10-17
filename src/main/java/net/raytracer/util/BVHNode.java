@@ -1,6 +1,8 @@
-package net.raytracer;
+package net.raytracer.util;
 
 import java.util.ArrayList;
+import net.raytracer.object.*;
+import net.raytracer.math.*;
 
 public class BVHNode extends Hittable {
     public AABB bounding_box;
@@ -64,7 +66,7 @@ public class BVHNode extends Hittable {
         return min + (max-min) * random_double();
     }
 
-    public boolean hit(Ray r, Interval ray_t, hit_record rec){
+    public boolean hit(Ray r, Interval ray_t, HitRecord rec){
         if (!bounding_box.hit(r, ray_t))
             return false;
 

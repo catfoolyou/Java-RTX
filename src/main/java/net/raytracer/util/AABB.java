@@ -1,4 +1,6 @@
-package net.raytracer;
+package net.raytracer.util;
+
+import net.raytracer.math.*;
 
 public class AABB {
 

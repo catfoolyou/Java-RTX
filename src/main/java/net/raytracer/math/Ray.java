@@ -1,4 +1,4 @@
-package net.raytracer;
+package net.raytracer.math;
 
 public class Ray {
     public Vector3 origin;

@@ -9,6 +9,13 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import javax.imageio.ImageIO;
 import static javax.swing.WindowConstants.*;
 
+import net.raytracer.math.Interval;
+import net.raytracer.math.Ray;
+import net.raytracer.math.Vector3;
+import net.raytracer.object.HitRecord;
+import net.raytracer.object.Hittable;
+import net.raytracer.util.WriteColor;
+
 public class Camera {
 
     double degrees_to_radians(double degrees) {
@@ -162,7 +169,7 @@ public class Camera {
         if (depth <= 0)
             return new Vector3(0,0,0);
 
-        hit_record rec = new hit_record();
+        HitRecord rec = new HitRecord();
 
         if (!world.hit(r, new Interval(0.001, infinity), rec))
             return background;
