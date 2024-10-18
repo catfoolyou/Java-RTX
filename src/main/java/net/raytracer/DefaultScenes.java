@@ -145,7 +145,6 @@ public class DefaultScenes {
     
         cam.render(world);
     }
-    
 
     public static void SimpleLight() throws IOException {
         HittableList world = new HittableList();

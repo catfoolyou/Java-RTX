@@ -131,14 +131,55 @@ public class Camera {
         System.out.println("Done! (" + (endTime - startTime) / 1000.0 + " s)");
 
         File outputfile = new File("result.jpg");
-
-        int option = JOptionPane.showConfirmDialog(frame, "Save to file?", "Render completed", JOptionPane.YES_NO_OPTION);
-        if(option == JOptionPane.YES_OPTION)
-            ImageIO.write(result, "jpg", outputfile); 
-        
+        saveFileDialouge(frame, result, outputfile);
     }
 
+    public void render(Hittable world, JFrame frame) throws IOException {
+        initialize();
 
+        frame.setSize(new Dimension(this.image_width, this.image_height));
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        BufferedImage result = new BufferedImage(this.image_width, this.image_height, TYPE_INT_RGB);
+
+        JLabel img = new JLabel(new ImageIcon(result));
+        frame.add(img);
+        frame.pack();
+
+        long startTime = System.currentTimeMillis();
+
+        for (int j = 0; j < image_height; j++) {
+            System.out.println("Scanlines remaining: " + (image_height - j));
+            for (int i = 0; i < image_width; i++) {
+
+                Vector3 pixel_color = new Vector3(0,0,0);
+
+                for (int sample = 0; sample < samples_per_pixel; sample++) {
+                    Ray r = get_ray(i, j);
+                    pixel_color = pixel_color.add(ray_color(r, max_depth, world));
+                }
+
+                Vector3 color = WriteColor.write_color(pixel_color.multiply(pixel_samples_scale));
+                int rgb = (int) (65536 * color.x + 256 * color.y + color.z);
+                result.setRGB(i, j, rgb);
+                img.repaint();
+            }
+        }
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("Done! (" + (endTime - startTime) / 1000.0 + " s)");
+
+        File outputfile = new File("result.jpg");
+        saveFileDialouge(frame, result, outputfile);
+    }
+
+    public void saveFileDialouge(JFrame frame, BufferedImage image, File outfile) throws IOException {
+        int option = JOptionPane.showConfirmDialog(frame, "Save to file?", "Render completed", JOptionPane.YES_NO_OPTION);
+        if(option == JOptionPane.YES_OPTION)
+            ImageIO.write(image, "jpg", outfile);
+    }
 
     public Ray get_ray(int i, int j){
         // Construct a camera ray originating from the origin and directed at randomly sampled

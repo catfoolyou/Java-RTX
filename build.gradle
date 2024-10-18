@@ -20,13 +20,13 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainClass = 'net.raytracer.Raytracer'
+    mainClass = 'net.raytracer.MainClass'
 }
 
 jar {
     manifest {
         attributes(
-                'Main-Class': 'net.raytracer.Raytracer'
+                'Main-Class': 'net.raytracer.MainClass'
         )
     }
 }
