@@ -59,6 +59,42 @@ public class MainClass {
             }
         });
 
+        spheres.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    frame.repaint();
+                    DefaultScenes.Spheres(frame);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        checker.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    frame.repaint();
+                    DefaultScenes.SpheresChecker(frame);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        quad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    frame.repaint();
+                    DefaultScenes.Quads(frame);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         light.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -71,10 +107,35 @@ public class MainClass {
             }
         });
 
+        cornell.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    frame.repaint();
+                    DefaultScenes.CornellBox(frame);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        smoke.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    frame.repaint();
+                    DefaultScenes.CornellSmoke(frame);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         menu.add(loadFiles);
         menu.add(edit);
         menu.add(scene);
 
+        frame.repaint();
         frame.setJMenuBar(menu);
     }
 

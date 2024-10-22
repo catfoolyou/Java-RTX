@@ -110,7 +110,6 @@ public class Camera {
         for (int j = 0; j < image_height; j++) {
             System.out.println("Scanlines remaining: " + (image_height - j));
             for (int i = 0; i < image_width; i++) {
-
                 Vector3 pixel_color = new Vector3(0,0,0);
 
                 for (int sample = 0; sample < samples_per_pixel; sample++) {
@@ -122,7 +121,6 @@ public class Camera {
                 int rgb = (int) (65536 * color.x + 256 * color.y + color.z);
                 result.setRGB(i, j, rgb);
                 img.repaint();
-
             }
         }
 
