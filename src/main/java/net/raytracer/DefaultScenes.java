@@ -177,7 +177,6 @@ public class DefaultScenes {
     }
     
     public static void CornellBox(JFrame frame) throws IOException{
-        
         HittableList world = new HittableList();
 
         Material red = new Lambertian(new Vector3(0.65, 0.05, 0.05));
@@ -222,7 +221,6 @@ public class DefaultScenes {
     }
 
     public static void CornellSmoke(JFrame frame) throws IOException{
-        
         HittableList world = new HittableList();
 
         Material red = new Lambertian(new Vector3(0.65, 0.05, 0.05));

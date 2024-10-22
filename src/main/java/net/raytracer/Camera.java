@@ -17,7 +17,8 @@ import net.raytracer.object.Hittable;
 import net.raytracer.util.WriteColor;
 
 public class Camera {
-
+    public static BufferedImage result;
+    public static File outputfile;
     double degrees_to_radians(double degrees) {
         return degrees * pi / 180.0;
     }
@@ -99,7 +100,7 @@ public class Camera {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        BufferedImage result = new BufferedImage(this.image_width, this.image_height, TYPE_INT_RGB);
+        result = new BufferedImage(this.image_width, this.image_height, TYPE_INT_RGB);
         JLabel img = new JLabel(new ImageIcon(result));
         frame.add(img);
         frame.pack();
@@ -121,20 +122,24 @@ public class Camera {
                 int rgb = (int) (65536 * color.x + 256 * color.y + color.z);
                 result.setRGB(i, j, rgb);
                 img.repaint();
+
             }
         }
 
         long endTime = System.currentTimeMillis();
         System.out.println("Done! (" + (endTime - startTime) / 1000.0 + " s)");
 
-        File outputfile = new File("result.jpg");
-        saveFileDialouge(frame, result, outputfile);
+        outputfile = new File("result.jpg");
     }
 
-    public void saveFileDialouge(JFrame frame, BufferedImage image, File outfile) throws IOException {
-        int option = JOptionPane.showConfirmDialog(frame, "Save to file?", "Render completed", JOptionPane.YES_NO_OPTION);
-        if(option == JOptionPane.YES_OPTION)
-            ImageIO.write(image, "jpg", outfile);
+    public static void saveFileDialogue(JFrame frame) throws IOException {
+        int option = JOptionPane.showConfirmDialog(frame, "Save as result.jpg", "Save to file?", JOptionPane.YES_NO_OPTION);
+        if(option == JOptionPane.YES_OPTION && result != null && outputfile != null){
+            ImageIO.write(result, "jpg", outputfile);
+        }
+        else{
+            System.out.println("Nothing to save dumbass");
+        }
     }
 
     public Ray get_ray(int i, int j){

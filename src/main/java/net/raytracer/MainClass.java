@@ -2,13 +2,9 @@ package net.raytracer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.swing.*;
 import java.awt.*;
-
-import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static javax.swing.WindowConstants.*;
 
 public class MainClass {
@@ -51,6 +47,29 @@ public class MainClass {
         JMenu scene = new JMenu("Scene");
         JMenuItem render = new JMenuItem("Render scene");
         scene.add(render);
+
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    Camera.saveFileDialogue(frame);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        light.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    frame.repaint();
+                    DefaultScenes.SimpleLight(frame);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         menu.add(loadFiles);
         menu.add(edit);

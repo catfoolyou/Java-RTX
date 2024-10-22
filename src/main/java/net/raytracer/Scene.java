@@ -6,7 +6,6 @@ import net.raytracer.util.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.awt.image.BufferedImage;
 
 public class Scene {
     ArrayList<Material> materialList = new ArrayList<Material>();
