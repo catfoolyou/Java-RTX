@@ -1,20 +1,21 @@
 package net.raytracer;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.*;
 import java.awt.*;
 
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static javax.swing.WindowConstants.*;
 
 public class MainClass {
 
-    final double infinity = Double.POSITIVE_INFINITY;
-    final double pi = 3.1415926535897932385;
-
     public static void createGUI() throws IOException {
         JFrame frame = new JFrame();
-        frame.setSize(new Dimension(320, 200));
+        frame.setSize(new Dimension(800, 450));
         frame.setTitle("Raytracer");
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -23,7 +24,22 @@ public class MainClass {
         JMenuBar menu = new JMenuBar();
 
         JMenu loadFiles = new JMenu("File");
-        JMenuItem defaultScenes = new JMenuItem("Default Scenes");
+        JMenu defaultScenes = new JMenu("Default Scenes");
+
+        JMenuItem spheres = new JMenuItem("Random spheres");
+        JMenuItem checker = new JMenuItem("Spheres with checkers");
+        JMenuItem quad = new JMenuItem("Simple quad scene");
+        JMenuItem light = new JMenuItem("Emissive material test");
+        JMenuItem cornell = new JMenuItem("Cornell box");
+        JMenuItem smoke = new JMenuItem("Cornell box with smoke mediums");
+
+        defaultScenes.add(spheres);
+        defaultScenes.add(checker);
+        defaultScenes.add(quad);
+        defaultScenes.add(light);
+        defaultScenes.add(cornell);
+        defaultScenes.add(smoke);
+
         JMenuItem custom = new JMenuItem("Load custom scene");
         loadFiles.add(defaultScenes);
         loadFiles.add(custom);
@@ -41,44 +57,9 @@ public class MainClass {
         menu.add(scene);
 
         frame.setJMenuBar(menu);
-
-        DefaultScenes.SimpleLight();
     }
 
     public static void main(String[] args) throws IOException {
         createGUI();
-        /*System.out.println("Enter 1-6 for the default scenes");
-        System.out.println("1) Random spheres");
-        System.out.println("2) Spheres with checkers");
-        System.out.println("3) Simple Quad scene");
-        System.out.println("4) Emissive material test");
-        System.out.println("5) Cornell box");
-        System.out.println("6) Cornell box with smoke mediums");
-
-        Scanner in = new Scanner(System.in);
-        int choice = in.nextInt();
-
-        switch (choice) {
-            case 1:
-                DefaultScenes.Spheres();
-                break;
-            case 2:
-                DefaultScenes.SpheresChecker();
-                break;
-            case 3:
-                DefaultScenes.Quads();
-                break;
-            case 4:
-                DefaultScenes.SimpleLight();
-                break;
-            case 5:
-                DefaultScenes.CornellBox();
-                break;
-            case 6:
-                DefaultScenes.CornellSmoke();
-                break;
-            default:
-                throw new AssertionError();
-        }*/
     }
 }

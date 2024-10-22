@@ -6,11 +6,15 @@ import net.raytracer.util.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 
 public class Scene {
     ArrayList<Material> materialList = new ArrayList<Material>();
     HittableList world;
     public Camera cam;
+
+    final double infinity = Double.POSITIVE_INFINITY;
+    final double pi = 3.1415926535897932385;
 
     public Scene(){
         this.world = new HittableList();
@@ -23,10 +27,6 @@ public class Scene {
 
     public void addMaterial(Material m){
         this.materialList.add(m);
-    }
-
-    public void render() throws IOException{
-        this.cam.render(this.world);
     }
 
     public void render(JFrame frame) throws IOException{
