@@ -92,7 +92,8 @@ public class Camera {
         defocus_disk_v = v.multiply(defocus_radius);
     }
 
-    public void render(Hittable world, JFrame frame) throws IOException {
+    public void render(Hittable world, JFrame frame) //throws IOException
+    {
         initialize();
 
         frame.setSize(new Dimension(this.image_width, this.image_height));

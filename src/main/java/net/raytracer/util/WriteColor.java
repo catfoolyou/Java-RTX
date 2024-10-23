@@ -12,7 +12,7 @@ public class WriteColor {
         return 0;
     }
 
-    public static Vector3 write_color(float r2, float g2, float b2) throws IOException{
+    public static Vector3 write_color(float r2, float g2, float b2){
         float r = r2;
         float g = g2;
         float b = b2;
@@ -30,7 +30,8 @@ public class WriteColor {
         return new Vector3(ir, ig, ib);            
     }
 
-    public static Vector3 write_color(Vector3 vec) throws IOException{        
+    public static Vector3 write_color(Vector3 vec)
+    {
         float r = vec.x;
         float g = vec.y;
         float b = vec.z;

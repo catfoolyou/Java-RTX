@@ -16,7 +16,8 @@ public class DefaultScenes {
         return min + (max-min) * random_double();
     }
 
-    public static void Spheres(JFrame frame) throws IOException{
+    public static void Spheres(JFrame frame)
+    {
         HittableList world = new HittableList();
 
         Material ground_material = new Lambertian(new Vector3(0.5, 0.5, 0.5));
@@ -78,7 +79,7 @@ public class DefaultScenes {
         cam.render(world, frame);
     }
 
-    public static void SpheresChecker(JFrame frame) throws IOException{
+    public static void SpheresChecker(JFrame frame){
         HittableList world = new HittableList();
 
         Material ground_material = new Lambertian(new Checker(0.32, new Vector3(0.2, 0.3, 0.1), new Vector3(0.9)));
@@ -112,7 +113,7 @@ public class DefaultScenes {
         cam.render(world, frame);
     }
 
-    public static void Quads(JFrame frame) throws IOException {
+    public static void Quads(JFrame frame){
         HittableList world = new HittableList();
     
         // Materials
@@ -147,7 +148,7 @@ public class DefaultScenes {
         cam.render(world, frame);
     }
 
-    public static void SimpleLight(JFrame frame) throws IOException {
+    public static void SimpleLight(JFrame frame){
         HittableList world = new HittableList();
     
         SolidColor pertext = new SolidColor(new Vector3(0.5));
@@ -176,7 +177,7 @@ public class DefaultScenes {
         cam.render(world, frame);
     }
     
-    public static void CornellBox(JFrame frame) throws IOException{
+    public static void CornellBox(JFrame frame){
         HittableList world = new HittableList();
 
         Material red = new Lambertian(new Vector3(0.65, 0.05, 0.05));
@@ -220,7 +221,7 @@ public class DefaultScenes {
         cam.render(world, frame);
     }
 
-    public static void CornellSmoke(JFrame frame) throws IOException{
+    public static void CornellSmoke(JFrame frame){
         HittableList world = new HittableList();
 
         Material red = new Lambertian(new Vector3(0.65, 0.05, 0.05));

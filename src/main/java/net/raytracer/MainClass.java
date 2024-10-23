@@ -8,7 +8,6 @@ import java.awt.*;
 import static javax.swing.WindowConstants.*;
 
 public class MainClass {
-
     public static void createGUI() throws IOException {
         JFrame frame = new JFrame();
         frame.setSize(new Dimension(800, 450));
@@ -59,75 +58,50 @@ public class MainClass {
             }
         });
 
-        spheres.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                try {
+        spheres.addActionListener(
+            actionEvent ->
+                {
                     frame.repaint();
                     DefaultScenes.Spheres(frame);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+                });
 
         checker.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    frame.repaint();
-                    DefaultScenes.SpheresChecker(frame);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                frame.repaint();
+                DefaultScenes.SpheresChecker(frame);
             }
         });
 
         quad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    frame.repaint();
-                    DefaultScenes.Quads(frame);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                frame.repaint();
+                DefaultScenes.Quads(frame);
             }
         });
 
         light.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    frame.repaint();
-                    DefaultScenes.SimpleLight(frame);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                frame.repaint();
+                DefaultScenes.SimpleLight(frame);
             }
         });
 
         cornell.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    frame.repaint();
-                    DefaultScenes.CornellBox(frame);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                frame.repaint();
+                DefaultScenes.CornellBox(frame);
             }
         });
 
         smoke.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    frame.repaint();
-                    DefaultScenes.CornellSmoke(frame);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                frame.repaint();
+                DefaultScenes.CornellSmoke(frame);
             }
         });
 
@@ -135,8 +109,11 @@ public class MainClass {
         menu.add(edit);
         menu.add(scene);
 
-        frame.repaint();
         frame.setJMenuBar(menu);
+        frame.pack();
+        frame.setSize(new Dimension(800, 450));
+
+        //DefaultScenes.SimpleLight(frame);
     }
 
     public static void main(String[] args) throws IOException {
