@@ -1,14 +1,15 @@
 package net.raytracer;
-
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import javax.swing.*;
-import java.awt.*;
-import static javax.swing.WindowConstants.*;
+
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class MainClass {
-    public static void createGUI() throws IOException {
+
+    public static void createGUI(){
         JFrame frame = new JFrame();
         frame.setSize(new Dimension(800, 450));
         frame.setTitle("Raytracer");
@@ -59,51 +60,40 @@ public class MainClass {
         });
 
         spheres.addActionListener(
-            actionEvent ->
+                actionEvent ->
                 {
-                    frame.repaint();
-                    DefaultScenes.Spheres(frame);
+                    DefaultSceneUtils.renderSpheres();
                 });
 
-        checker.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.repaint();
-                DefaultScenes.SpheresChecker(frame);
-            }
-        });
+        checker.addActionListener(
+                actionEvent ->
+                {
+                    DefaultSceneUtils.renderCheckers();
+                });
 
-        quad.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.repaint();
-                DefaultScenes.Quads(frame);
-            }
-        });
+        quad.addActionListener(
+                actionEvent ->
+                {
+                    DefaultSceneUtils.renderQuads();
+                });
 
-        light.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.repaint();
-                DefaultScenes.SimpleLight(frame);
-            }
-        });
+        light.addActionListener(
+                actionEvent ->
+                {
+                    DefaultSceneUtils.renderLights();
+                });
 
-        cornell.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.repaint();
-                DefaultScenes.CornellBox(frame);
-            }
-        });
+        cornell.addActionListener(
+                actionEvent ->
+                {
+                    DefaultSceneUtils.renderCornell();
+                });
 
-        smoke.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.repaint();
-                DefaultScenes.CornellSmoke(frame);
-            }
-        });
+        smoke.addActionListener(
+                actionEvent ->
+                {
+                    DefaultSceneUtils.renderSmoke();
+                });
 
         menu.add(loadFiles);
         menu.add(edit);
@@ -112,8 +102,6 @@ public class MainClass {
         frame.setJMenuBar(menu);
         frame.pack();
         frame.setSize(new Dimension(800, 450));
-
-        //DefaultScenes.SimpleLight(frame);
     }
 
     public static void main(String[] args) throws IOException {

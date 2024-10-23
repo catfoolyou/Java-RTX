@@ -28,7 +28,7 @@ public class Scene {
         this.materialList.add(m);
     }
 
-    public void render(JFrame frame) throws IOException{
+    public void render(JFrame frame){
         this.cam.render(this.world, frame);
     }
 }
