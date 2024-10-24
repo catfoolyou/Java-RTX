@@ -1,11 +1,9 @@
 package net.raytracer;
 
-import java.io.IOException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
-import javax.imageio.ImageIO;
 import static javax.swing.WindowConstants.*;
 
 import net.raytracer.math.Interval;
@@ -17,6 +15,8 @@ import net.raytracer.util.WriteColor;
 
 public class Camera {
     public static BufferedImage result;
+    public static boolean debuggerEnabled = true;
+
     double degrees_to_radians(double degrees) {
         return degrees * pi / 180.0;
     }
@@ -121,7 +121,16 @@ public class Camera {
         }
 
         long endTime = System.currentTimeMillis();
-        System.out.println("Done! (" + (endTime - startTime) / 1000.0 + " s)");
+
+        if(debuggerEnabled){
+            System.out.println("Image rendered in " + (endTime - startTime) / 1000.0 + " seconds");
+            System.out.println("Image size: " + image_height + " x " + image_width + " pixels");
+            System.out.println("Rays per pixel: " + samples_per_pixel);
+            System.out.println("Light bounces: " + max_depth);
+        }
+        else {
+            System.out.println("Done! (" + (endTime - startTime) / 1000.0 + " s)");
+        }
 
         return this.result;
     }

@@ -9,7 +9,6 @@ import java.io.IOException;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class MainClass {
-    public BufferedImage scene;
 
     public static void createGUI(){
         JFrame frame = new JFrame();
@@ -44,13 +43,21 @@ public class MainClass {
 
         JMenu edit = new JMenu("Edit");
         JMenuItem save = new JMenuItem("Save to file");
+        JMenuItem enable = new JMenuItem("Enable debug");
+        JMenuItem disable = new JMenuItem("Disable debug");
         edit.add(save);
+        edit.add(enable);
+        edit.add(disable);
 
-        JMenu scene = new JMenu("Scene");
-        JMenuItem render = new JMenuItem("Render scene");
-        scene.add(render);
+        JMenu source = new JMenu("Source");
+        JMenuItem github = new JMenuItem("Source is available on Github");
+        source.add(github);
 
-        /*save.addActionListener(new ActionListener() {
+        JMenu help = new JMenu("Help");
+        JMenuItem helpText = new JMenuItem("Docs are available on Github");
+        help.add(helpText);
+
+        save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
@@ -59,13 +66,29 @@ public class MainClass {
                     throw new RuntimeException(e);
                 }
             }
-        });*/
+        });
+
+        enable.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("Debugger enabled");
+                Camera.debuggerEnabled = true;
+            }
+        });
+
+        disable.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("Debugger disabled");
+                Camera.debuggerEnabled = false;
+            }
+        });
 
         spheres.addActionListener(actionEvent -> {
             new SwingWorker<Void, Void>(){
                 @Override
                 protected Void doInBackground() throws Exception {
-                    RenderUtils.renderSpheres(frame);
+                    FileUtils.scene = RenderUtils.renderSpheres(frame);
                     return null;
                 }
             }.execute();
@@ -75,7 +98,7 @@ public class MainClass {
             new SwingWorker<Void, Void>(){
                 @Override
                 protected Void doInBackground() throws Exception {
-                    RenderUtils.renderCheckers(frame);
+                    FileUtils.scene = RenderUtils.renderCheckers(frame);
                     return null;
                 }
             }.execute();
@@ -85,7 +108,7 @@ public class MainClass {
             new SwingWorker<Void, Void>(){
                 @Override
                 protected Void doInBackground() throws Exception {
-                    RenderUtils.renderQuads(frame);
+                    FileUtils.scene = RenderUtils.renderQuads(frame);
                     return null;
                 }
             }.execute();
@@ -95,7 +118,7 @@ public class MainClass {
             new SwingWorker<Void, Void>(){
                 @Override
                 protected Void doInBackground() throws Exception {
-                    RenderUtils.renderLights(frame);
+                    FileUtils.scene = RenderUtils.renderLights(frame);
                     return null;
                 }
             }.execute();
@@ -105,7 +128,7 @@ public class MainClass {
             new SwingWorker<Void, Void>(){
                 @Override
                 protected Void doInBackground() throws Exception {
-                    RenderUtils.renderCornell(frame);
+                    FileUtils.scene = RenderUtils.renderCornell(frame);
                     return null;
                 }
             }.execute();
@@ -115,7 +138,7 @@ public class MainClass {
             new SwingWorker<Void, Void>(){
                 @Override
                 protected Void doInBackground() throws Exception {
-                    RenderUtils.renderSmoke(frame);
+                    FileUtils.scene = RenderUtils.renderSmoke(frame);
                     return null;
                 }
             }.execute();
@@ -123,7 +146,8 @@ public class MainClass {
 
         menu.add(loadFiles);
         menu.add(edit);
-        menu.add(scene);
+        menu.add(source);
+        menu.add(help);
 
         frame.setJMenuBar(menu);
         frame.pack();

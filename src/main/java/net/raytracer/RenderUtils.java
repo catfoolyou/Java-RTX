@@ -2,11 +2,13 @@ package net.raytracer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+
 import static javax.swing.WindowConstants.*;
 
 public class RenderUtils {
 
-    public static void renderSpheres(JFrame frame){
+    public static BufferedImage renderSpheres(JFrame frame){
         frame.getContentPane().removeAll();
         frame.setSize(new Dimension(800, 450));
         frame.setTitle("Random spheres");
@@ -14,10 +16,10 @@ public class RenderUtils {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        DefaultScenes.Spheres(frame);
+        return DefaultScenes.Spheres(frame);
     }
 
-    public static void renderCheckers(JFrame frame){
+    public static BufferedImage renderCheckers(JFrame frame){
         frame.getContentPane().removeAll();
         frame.setSize(new Dimension(800, 450));
         frame.setTitle("Spheres with checkers");
@@ -25,10 +27,10 @@ public class RenderUtils {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        DefaultScenes.SpheresChecker(frame);
+        return DefaultScenes.SpheresChecker(frame);
     }
 
-    public static void renderQuads(JFrame frame){
+    public static BufferedImage renderQuads(JFrame frame){
         frame.getContentPane().removeAll();
         frame.setSize(new Dimension(600, 600));
         frame.setTitle("Simple quad scene");
@@ -36,10 +38,10 @@ public class RenderUtils {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        DefaultScenes.Quads(frame);
+        return DefaultScenes.Quads(frame);
     }
 
-    public static void renderLights(JFrame frame){
+    public static BufferedImage renderLights(JFrame frame){
         frame.getContentPane().removeAll();
         frame.setSize(new Dimension(800, 450));
         frame.setTitle("Emissive material test");
@@ -47,10 +49,10 @@ public class RenderUtils {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        DefaultScenes.SimpleLight(frame);
+        return DefaultScenes.SimpleLight(frame);
     }
 
-    public static void renderCornell(JFrame frame){
+    public static BufferedImage renderCornell(JFrame frame){
         frame.getContentPane().removeAll();
         frame.setSize(new Dimension(600, 600));
         frame.setTitle("Cornell box");
@@ -58,10 +60,10 @@ public class RenderUtils {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        DefaultScenes.CornellBox(frame);
+        return DefaultScenes.CornellBox(frame);
     }
 
-    public static void renderSmoke(JFrame frame){
+    public static BufferedImage renderSmoke(JFrame frame){
         frame.getContentPane().removeAll();
         frame.setSize(new Dimension(600, 600));
         frame.setTitle("Cornell box with smoke mediums");
@@ -69,10 +71,10 @@ public class RenderUtils {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        DefaultScenes.CornellSmoke(frame);
+        return DefaultScenes.CornellSmoke(frame);
     }
 
-    public static void renderCustomScene(JFrame frame, Scene custom){
+    public static BufferedImage renderCustomScene(JFrame frame, Scene custom){
         frame.getContentPane().removeAll();
         frame.setSize(new Dimension(custom.cam.image_width, custom.cam.image_height));
         frame.setTitle("Custom scene");
@@ -80,8 +82,6 @@ public class RenderUtils {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        custom.render(frame);
-
+        return custom.render(frame);
     }
-
 }
