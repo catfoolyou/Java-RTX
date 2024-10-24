@@ -4,6 +4,7 @@ import net.raytracer.math.*;
 import net.raytracer.object.*;
 import net.raytracer.util.*;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.JFrame;
 
@@ -11,12 +12,12 @@ public class DefaultScenes {
     public static double random_double() {
         return Math.random();
     }
-    
+
     public static double random_double(double min, double max) {
         return min + (max-min) * random_double();
     }
 
-    public static void Spheres(JFrame frame)
+    public static BufferedImage Spheres(JFrame frame)
     {
         HittableList world = new HittableList();
 
@@ -76,10 +77,10 @@ public class DefaultScenes {
         cam.defocus_angle = 0.6;
         cam.focus_dist = 10.0;
 
-        cam.render(world, frame);
+        return cam.render(world, frame);
     }
 
-    public static void SpheresChecker(JFrame frame){
+    public static BufferedImage SpheresChecker(JFrame frame){
         HittableList world = new HittableList();
 
         Material ground_material = new Lambertian(new Checker(0.32, new Vector3(0.2, 0.3, 0.1), new Vector3(0.9)));
@@ -110,10 +111,10 @@ public class DefaultScenes {
         cam.defocus_angle = 0.6;
         cam.focus_dist = 10.0;
 
-        cam.render(world, frame);
+        return cam.render(world, frame);
     }
 
-    public static void Quads(JFrame frame){
+    public static BufferedImage Quads(JFrame frame){
         HittableList world = new HittableList();
     
         // Materials
@@ -145,10 +146,10 @@ public class DefaultScenes {
     
         cam.defocus_angle = 0;
     
-        cam.render(world, frame);
+        return cam.render(world, frame);
     }
 
-    public static void SimpleLight(JFrame frame){
+    public static BufferedImage SimpleLight(JFrame frame){
         HittableList world = new HittableList();
     
         SolidColor pertext = new SolidColor(new Vector3(0.5));
@@ -174,10 +175,10 @@ public class DefaultScenes {
     
         cam.defocus_angle = 0;
     
-        cam.render(world, frame);
+        return cam.render(world, frame);
     }
     
-    public static void CornellBox(JFrame frame){
+    public static BufferedImage CornellBox(JFrame frame){
         HittableList world = new HittableList();
 
         Material red = new Lambertian(new Vector3(0.65, 0.05, 0.05));
@@ -218,10 +219,10 @@ public class DefaultScenes {
 
         cam.defocus_angle = 0;
 
-        cam.render(world, frame);
+        return cam.render(world, frame);
     }
 
-    public static void CornellSmoke(JFrame frame){
+    public static BufferedImage CornellSmoke(JFrame frame){
         HittableList world = new HittableList();
 
         Material red = new Lambertian(new Vector3(0.65, 0.05, 0.05));
@@ -262,6 +263,6 @@ public class DefaultScenes {
 
         cam.defocus_angle = 0;
 
-        cam.render(world, frame);
+        return cam.render(world, frame);
     }
 }

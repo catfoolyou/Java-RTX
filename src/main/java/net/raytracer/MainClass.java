@@ -3,11 +3,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class MainClass {
+    public BufferedImage scene;
 
     public static void createGUI(){
         JFrame frame = new JFrame();
@@ -48,52 +50,76 @@ public class MainClass {
         JMenuItem render = new JMenuItem("Render scene");
         scene.add(render);
 
-        save.addActionListener(new ActionListener() {
+        /*save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
-                    Camera.saveFileDialogue(frame);
+                    FileUtils.saveFileDialogue(frame);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
+        });*/
+
+        spheres.addActionListener(actionEvent -> {
+            new SwingWorker<Void, Void>(){
+                @Override
+                protected Void doInBackground() throws Exception {
+                    RenderUtils.renderSpheres(frame);
+                    return null;
+                }
+            }.execute();
         });
 
-        spheres.addActionListener(
-                actionEvent ->
-                {
-                    DefaultSceneUtils.renderSpheres();
-                });
+        checker.addActionListener(actionEvent -> {
+            new SwingWorker<Void, Void>(){
+                @Override
+                protected Void doInBackground() throws Exception {
+                    RenderUtils.renderCheckers(frame);
+                    return null;
+                }
+            }.execute();
+        });
 
-        checker.addActionListener(
-                actionEvent ->
-                {
-                    DefaultSceneUtils.renderCheckers();
-                });
+        quad.addActionListener(actionEvent -> {
+            new SwingWorker<Void, Void>(){
+                @Override
+                protected Void doInBackground() throws Exception {
+                    RenderUtils.renderQuads(frame);
+                    return null;
+                }
+            }.execute();
+        });
 
-        quad.addActionListener(
-                actionEvent ->
-                {
-                    DefaultSceneUtils.renderQuads();
-                });
+        light.addActionListener(actionEvent -> {
+            new SwingWorker<Void, Void>(){
+                @Override
+                protected Void doInBackground() throws Exception {
+                    RenderUtils.renderLights(frame);
+                    return null;
+                }
+            }.execute();
+        });
 
-        light.addActionListener(
-                actionEvent ->
-                {
-                    DefaultSceneUtils.renderLights();
-                });
+        cornell.addActionListener(actionEvent -> {
+            new SwingWorker<Void, Void>(){
+                @Override
+                protected Void doInBackground() throws Exception {
+                    RenderUtils.renderCornell(frame);
+                    return null;
+                }
+            }.execute();
+        });
 
-        cornell.addActionListener(
-                actionEvent ->
-                {
-                    DefaultSceneUtils.renderCornell();
-                });
-
-        smoke.addActionListener(
-                actionEvent ->
-                {
-                    DefaultSceneUtils.renderSmoke();
-                });
+        smoke.addActionListener(actionEvent -> {
+            new SwingWorker<Void, Void>(){
+                @Override
+                protected Void doInBackground() throws Exception {
+                    RenderUtils.renderSmoke(frame);
+                    return null;
+                }
+            }.execute();
+        });
 
         menu.add(loadFiles);
         menu.add(edit);

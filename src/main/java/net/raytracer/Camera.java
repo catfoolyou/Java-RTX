@@ -1,6 +1,5 @@
 package net.raytracer;
 
-import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +17,6 @@ import net.raytracer.util.WriteColor;
 
 public class Camera {
     public static BufferedImage result;
-    public static File outputfile;
     double degrees_to_radians(double degrees) {
         return degrees * pi / 180.0;
     }
@@ -51,8 +49,6 @@ public class Camera {
     private Vector3 u, v, w;
     private Vector3 defocus_disk_u;       // Defocus disk horizontal radius
     private Vector3 defocus_disk_v;       // Defocus disk vertical radius
-
-    File image = new File("result.ppm");
 
     public double random_double() {
         return Math.random();
@@ -92,7 +88,7 @@ public class Camera {
         defocus_disk_v = v.multiply(defocus_radius);
     }
 
-    public void render(Hittable world, JFrame frame){
+    public BufferedImage render(Hittable world, JFrame frame){
         initialize();
 
         frame.setSize(new Dimension(this.image_width, this.image_height));
@@ -127,17 +123,7 @@ public class Camera {
         long endTime = System.currentTimeMillis();
         System.out.println("Done! (" + (endTime - startTime) / 1000.0 + " s)");
 
-        outputfile = new File("result.jpg");
-    }
-
-    public static void saveFileDialogue(JFrame frame) throws IOException {
-        int option = JOptionPane.showConfirmDialog(frame, "Save as result.jpg", "Save to file?", JOptionPane.YES_NO_OPTION);
-        if(option == JOptionPane.YES_OPTION && result != null && outputfile != null){
-            ImageIO.write(result, "jpg", outputfile);
-        }
-        else{
-            System.out.println("Nothing to save dumbass");
-        }
+        return this.result;
     }
 
     public Ray get_ray(int i, int j){

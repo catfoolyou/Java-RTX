@@ -4,6 +4,7 @@ import net.raytracer.object.*;
 import net.raytracer.util.*;
 
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class Scene {
         this.materialList.add(m);
     }
 
-    public void render(JFrame frame){
-        this.cam.render(this.world, frame);
+    public BufferedImage render(JFrame frame){
+        return this.cam.render(this.world, frame);
     }
 }
