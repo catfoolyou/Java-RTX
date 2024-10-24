@@ -23,31 +23,6 @@ Material checker = new Lambertian(new Checker(0.32, new Vector3(0.2, 0.3, 0.1), 
 ```
 _____________________________________
 
-Add objects (anything that extends Hittable) using `world.add` like this
-```java
-world.add(new Quad(new Vector3(555,0,0), new Vector3(0,555,0), new Vector3(0,0,555), green)); // Example of adding a green quad
-world.add(new Sphere(new Vector3(0, 1, 0), 1.0, material1));# Java-RTX
-Basic java raytracer based on the Raytracing in one weekend series and some other code I stole off the internet. I have yet to make a proper sceneloader so deal with this hardcoded shit for now, hopefully I will make a proper sceneloader and API for this project at some point.
-
-## API
-Define a new scene like this:
-
-`HittableList world = new HittableList();`
-_____________________________________
-
-Define materials like this
-```java
-Material green = new Lambertian(new Vector3(0.12, 0.45, 0.15));
-Material metal = new Metal(new Vector3(0.7), 0.01);
-Material light = new DiffuseLight(new Vector3(15));
-```
-For all material types look in `Material.java`
-
-Lamberitans can be assigned textures, like this
-```java
-Material checker = new Lambertian(new Checker(0.32, new Vector3(0.2, 0.3, 0.1), new Vector3(0.9)));
-```
-_____________________________________
 
 Add objects (anything that extends Hittable) using `world.add` like this
 ```java

@@ -3,7 +3,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
@@ -56,6 +55,14 @@ public class MainClass {
         JMenu help = new JMenu("Help");
         JMenuItem helpText = new JMenuItem("Docs are available on Github");
         help.add(helpText);
+
+        custom.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Scene customScene = FileUtils.uploadCustomScene(frame);
+                RenderUtils.renderCustomScene(frame, customScene);
+            }
+        });
 
         save.addActionListener(new ActionListener() {
             @Override
