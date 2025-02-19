@@ -3,6 +3,9 @@ package net.raytracer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicReference;
+
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import static javax.swing.WindowConstants.*;
 
@@ -102,21 +105,26 @@ public class Camera {
         frame.pack();
 
         long startTime = System.currentTimeMillis();
+        final ExecutorService service = Executors.newCachedThreadPool();
 
         for (int j = 0; j < image_height; j++) {
             System.out.println("Scanlines remaining: " + (image_height - j));
             for (int i = 0; i < image_width; i++) {
-                Vector3 pixel_color = new Vector3(0,0,0);
+                int x = i;
+                int y = j;
+                service.submit(() -> {
+                    Vector3 pixel_color = new Vector3(0,0,0);
 
-                for (int sample = 0; sample < samples_per_pixel; sample++) {
-                    Ray r = get_ray(i, j);
-                    pixel_color = pixel_color.add(ray_color(r, max_depth, world));
-                }
+                    for (int sample = 0; sample < samples_per_pixel; sample++) {
+                        Ray r = get_ray(x, y);
+                        pixel_color = pixel_color.add(ray_color(r, max_depth, world));
+                    }
 
-                Vector3 color = WriteColor.write_color(pixel_color.multiply(pixel_samples_scale));
-                int rgb = (int) (65536 * color.x + 256 * color.y + color.z);
-                result.setRGB(i, j, rgb);
-                img.repaint();
+                    Vector3 color = WriteColor.write_color(pixel_color.multiply(pixel_samples_scale));
+                    int rgb = (int) (65536 * color.x + 256 * color.y + color.z);
+                    result.setRGB(x, y, rgb);
+                    img.repaint();
+                });
             }
         }
 
